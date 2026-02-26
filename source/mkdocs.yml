@@ -4,12 +4,28 @@ site_author: "Aleksandr Lesnitsky"
 theme:
   name: material
   palette:
-    primary: blue
-    accent: blue
+    # Светлая тема
+    - scheme: default
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Тёмная тема
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
   features:
     - navigation.tabs
     - navigation.sections
     - navigation.instant
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
 
 nav:
   - Главная: index.md
