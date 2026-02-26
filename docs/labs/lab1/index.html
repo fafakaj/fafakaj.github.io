@@ -198,7 +198,69 @@
             <!-- block content -->
                 <section class="p-md-5 section-content">
     <article>
-        <p></p>
+        <p><h1 id="1">Лабораторная работа 1</h1>
+<h2 id="mkdocs-github-pages">Тема: Создание и развертывание статического сайта на базе MkDocs с публикацией на GitHub Pages</h2>
+<hr />
+<h2 id="_1">Цель работы</h2>
+<ul>
+<li>Освоить создание статического сайта с использованием MkDocs.</li>
+<li>Научиться организовывать структуру документации проекта.</li>
+<li>Изучить основы работы с Git и GitHub.</li>
+<li>Развернуть сайт на GitHub Pages на домене вида username.github.io.</li>
+<li>Освоить настройку темы оформления и файла mkdocs.yml.</li>
+</ul>
+<hr />
+<h2 id="_2">Самостоятельная часть</h2>
+<h3 id="_3">Выбор и подключение темы оформления</h3>
+<p><strong>Выбрана тема:</strong> Dracula</p>
+<p><strong>Обоснование:</strong>
+- Тёмная схема снижает нагрузку на глаза;
+- Встроенная подсветка синтаксиса для кода;
+- Минималистичный дизайн для портфолио разработчика;</p>
+<p><strong>Установка:</strong></p>
+<pre><code class="language-bash">pip install mkdocs-dracula-theme
+
+</code></pre>
+<hr />
+<pre><code class="language-python">site_name: &quot;Aleksandr Lesnitsky - Portfolio&quot;
+site_url: https://fafakaj.github.io/
+site_author: &quot;Aleksandr Lesnitsky&quot;
+
+theme:
+  name: dracula
+  highlightjs: true
+  hljs_style: dracula
+
+nav:
+  - Главная: index.md
+  - Об авторе: about.md
+  - Лабораторные работы:
+    - Список работ: labs/index.md
+    - Лаба 1: labs/lab1.md
+  - Проекты: projects.md
+  - Контакты: contact.md
+
+</code></pre>
+<hr />
+<h3 id="_4">Структура страниц</h3>
+<pre><code>docs/
+├── index.md          # Главная
+├── about.md          # Об авторе
+├── projects.md       # Проекты
+├── contact.md        # Контакты
+└── labs/
+    ├── index.md      # Список лабораторных
+    └── lab1.md       # Отчёт по работе 1
+</code></pre>
+<h3 id="_5">Навигация</h3>
+<p>Навигация настроена через параметр nav в файле mkdocs.yml. Реализована иерархическая структура с вложенными разделами для лабораторных работ.</p>
+<p>Сайт доступен: https://fafakaj.github.io/</p>
+<h3 id="_6">Выводы</h3>
+<ul>
+<li>Освоено создание статического сайта на MkDocs.</li>
+<li>Изучена организация структуры документации.</li>
+<li>Получены навыки работы с Git и GitHub Pages.</li>
+</ul></p>
     </article>
 </section>
             <!-- endblock -->
