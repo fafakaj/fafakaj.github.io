@@ -1,4 +1,20 @@
-site_name: Сайт Лесницкого Александра
+site_name: "Aleksandr Lesnitsky - Portfolio"
+site_author: "Aleksandr Lesnitsky"
+
+theme:
+  name: material
+  palette:
+    primary: blue
+    accent: blue
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.instant
+
 nav:
-  - Home: index.md
-  - About: about.md
+  - Главная: index.md
+  - Об авторе: about.md
+  - Лабораторные работы:
+    - Лаба 1: labs/lab1.md
+  - Проекты: projects.md
+  - Контакты: contact.md
