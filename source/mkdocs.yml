@@ -15,6 +15,7 @@ nav:
   - Главная: index.md
   - Об авторе: about.md
   - Лабораторные работы:
+    - Список работ: labs/index.md
     - Лаба 1: labs/lab1.md
   - Проекты: projects.md
   - Контакты: contact.md
