@@ -3,21 +3,23 @@ site_url: https://fafakaj.github.io/
 site_author: "Aleksandr Lesnitsky"
 
 theme:
-  name: material
-  palette:
-    # Светлая тема
-    - scheme: default
-      primary: blue
-      accent: blue
-      toggle:
-        icon: material/brightness-7
-        name: Switch to dark mode
+  name: dracula
+  highlightjs: true
+  hljs_style: dracula
+  hljs_languages:
+    - yaml
+    - python
+    - bash
+    - javascript
+    - html
+    - css
 
-    # Тёмная тема
-    - scheme: slate
-      toggle:
-        icon: material/brightness-4
-        name: Switch to light mode
+extra:
+  dracula:
+    theme: dracula
+    show_copyright: true
+    back_to_top: true
+    last_updated: true
 
   features:
     - navigation.tabs
