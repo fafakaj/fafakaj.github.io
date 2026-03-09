@@ -14,21 +14,6 @@ theme:
     - html
     - css
 
-extra:
-  dracula:
-    theme: dracula
-    show_copyright: true
-    back_to_top: true
-    last_updated: true
-
-  features:
-    - navigation.tabs
-    - navigation.sections
-    - navigation.instant
-    - navigation.top
-    - search.suggest
-    - search.highlight
-    - content.code.copy
 
 nav:
   - Главная: index.md
@@ -36,5 +21,6 @@ nav:
   - Лабораторные работы:
     - Список работ: labs/index.md
     - Лаба 1: labs/lab1.md
+    - Лаба 2: labs/lab2.md
   - Проекты: projects.md
   - Контакты: contact.md
