@@ -1,2 +1,1 @@
-# fafakaj.github.io
-Немного обо мне
+# Адрес сайта: fafakaj.github.io
