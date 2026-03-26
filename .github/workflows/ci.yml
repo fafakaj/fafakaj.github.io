@@ -21,15 +21,15 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Build MkDocs to root
+      - name: Build MkDocs
         run: |
           cd source
-          mkdocs build --site-dir ..  # собираем в корень репозитория
+          mkdocs build --site-dir /tmp/mkdocs_build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./  # публикуем корень (там теперь только HTML)
+          publish_dir: /tmp/mkdocs_build
           publish_branch: release
           force_orphan: true
