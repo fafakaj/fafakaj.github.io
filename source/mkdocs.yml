@@ -20,7 +20,8 @@ nav:
   - Об авторе: about.md
   - Лабораторные работы:
     - Список работ: labs/index.md
-    - Лаба 1: labs/lab1.md
-    - Лаба 2: labs/lab2.md
+    - Л/Р 1: labs/lab1.md
+    - Л/Р 2: labs/lab2.md
+    - Л/Р 3: labs/lab3.md
   - Проекты: projects.md
   - Контакты: contact.md
