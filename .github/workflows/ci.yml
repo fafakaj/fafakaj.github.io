@@ -2,7 +2,8 @@ name: Build and Deploy MkDocs
 
 on:
   push:
-    branches: [main]
+    branches: 
+      - main
 
 jobs:
   build-and-deploy:
@@ -11,7 +12,8 @@ jobs:
       contents: write
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout main
+        uses: actions/checkout@v4
 
       - uses: actions/setup-python@v5
         with:
@@ -21,15 +23,8 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Build MkDocs
-        run: |
-          cd source
-          mkdocs build --site-dir /tmp/mkdocs_build
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: /tmp/mkdocs_build
-          publish_branch: release
-          force_orphan: true
+      - name: Deploy
+        uses: mhausenblas/mkdocs-deploy-gh-pages@nomaterial
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CONFIG_FILE: source/mkdocs.yml
