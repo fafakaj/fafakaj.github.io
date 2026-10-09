@@ -1,4 +1,4 @@
-// Резюме на 1–2 страницы. Проекты: те, у кого resume: true (если таких нет — все).
+// Резюме на одну страницу. Проекты: те, у кого resume: true (если таких нет — все).
 #import "common.typ": *
 
 #show: setup.with(title: "резюме")
@@ -14,17 +14,21 @@
 #if shown.len() > 0 [
   = Проекты
   #for p in shown {
-    entry(date: kind-line(p), title: link(site + "projects/" + p.slug + "/", p.title))[
-      #p.summary \
-      #if p.at("stack", default: none) != none [#label-line("Стек", p.stack.join(", "))]
-      #links-line(p)
-    ]
+    block(below: 0.85em, breakable: false, {
+      link(site + "projects/" + p.slug + "/", p.title)
+      [ — #p.summary]
+      linebreak()
+      event-line(p)
+      linebreak()
+      stack-line(p)
+      if p.at("links", default: none) != none { h(0.6em); links-line(p) }
+    })
   }
 ]
 
-#achievements-section()
+#achievements-section(extra-only: true, title: "Другие достижения")
 
 #v(1fr)
 #align(center, text(size: 9pt, fill: muted)[
-  Подробное портфолио со всеми проектами: #link(site, site.trim("https://", at: start).trim("/", at: end))
+  Подробно о каждом проекте: #link(site, site-short)
 ])

@@ -35,9 +35,10 @@
     <h3 class="ctitle">проекты</h3>
     {% for p in projects %}
     <div class="project">
-      {% if p.thumb %}<div class="pico"><a href="{{ root }}projects/{{ p.slug }}/"><img src="{{ root }}{{ p.thumb }}" alt=""></a></div>{% endif %}
+      <div class="pico"><a href="{{ root }}projects/{{ p.slug }}/" tabindex="-1" aria-hidden="true">{% if p.thumb %}<img src="{{ root }}{{ p.thumb }}" alt="">{% else %}<span class="pico-text">{{ (p.event or p.title).split(",")[0] }}</span>{% endif %}</a></div>
       <div class="pdesc">
         <a href="{{ root }}projects/{{ p.slug }}/">{{ p.title }}</a> — {{ p.summary }}
+        {% if p.event %}<span class="pevent">{{ p.event }}</span>{% endif %}
         {% if p.stack %}<span class="pstack">{{ p.stack | join(", ") }}</span>{% endif %}
       </div>
       <div class="pend"></div>
@@ -69,7 +70,7 @@
   <section id="pdf" class="container">
     <h3 class="ctitle">резюме в pdf</h3>
     <ul class="tul">
-      <li class="til tilb"><a href="{{ root }}pdf/{{ pdf.resume }}" download>Резюме, 1–2 страницы</a></li>
+      <li class="til tilb"><a href="{{ root }}pdf/{{ pdf.resume }}" download>Резюме, 1 страница</a></li>
       <li class="til"><a href="{{ root }}pdf/{{ pdf.portfolio }}" download>Полное портфолио</a></li>
     </ul>
   </section>

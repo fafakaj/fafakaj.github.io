@@ -146,7 +146,27 @@ hr {
 .pico { float: left; margin-right: 10px; }
 .pico img { height: 80px; border-radius: 5px; border: 1px solid var(--muted); }
 .pend { clear: both; }
-.pstack { display: block; color: var(--muted); font-size: 14px; margin-top: 4px; }
+.pico-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 107px;
+  height: 80px;
+  padding: 6px;
+  border-radius: 5px;
+  border: 1px solid var(--muted);
+  background: #f3f3f3;
+  color: #555;
+  font-size: 13px;
+  font-weight: bold;
+  text-align: center;
+}
+.pico a, .pico a:hover { text-decoration: none; }
+.pico img { width: 107px; object-fit: cover; }
+.pdesc { overflow: hidden; }
+.pevent { display: block; color: var(--venue); font-size: 14px; margin-top: 4px; }
+.pstack { display: block; color: var(--muted); font-size: 14px; margin-top: 2px; }
 
 .pub {
   font-size: 14px;

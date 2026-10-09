@@ -9,7 +9,7 @@
 <main class="container">
   <article class="case">
     <h1>{{ p.title }}</h1>
-    <h2>{{ p.year }}{% if p.kind %}, {{ p.kind | lower }}{% endif %}</h2>
+    <h2>{{ p.event or p.year }}</h2>
     <p class="lead">{{ p.summary }}</p>
     {% if p.stack %}<p><b>Стек:</b> {{ p.stack | join(", ") }}</p>{% endif %}
     {% if p.links %}<p><b>Ссылки:</b> {% for l in p.links %}<a href="{{ l.url }}">{{ l.label }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</p>{% endif %}
