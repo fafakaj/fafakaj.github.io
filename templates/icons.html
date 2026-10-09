@@ -1,0 +1,16 @@
+{# Круглые иконки под именем. Почта открывается по клику, как на karpathy.ai. #}
+{% macro icons(contacts, root, pdf) %}
+<div id="dico">
+  {% for c in contacts %}
+    {% if c.url.startswith("mailto:") %}
+  <button type="button" class="iico-btn" id="iemail" data-email="{{ c.value | rot13 }}" aria-expanded="false" aria-controls="demail" title="Показать почту">
+    <img src="{{ root }}static/icons/email.svg" class="iico" alt="Почта">
+  </button>
+    {% else %}
+  <a href="{{ c.url }}" title="{{ c.label }}"><img src="{{ root }}static/icons/{{ c.label | lower }}.svg" class="iico" alt="{{ c.label }}"></a>
+    {% endif %}
+  {% endfor %}
+  <a href="{{ root }}pdf/{{ pdf.resume }}" title="Резюме в PDF" download><img src="{{ root }}static/icons/cv.svg" class="iico" alt="Резюме в PDF"></a>
+</div>
+<div id="demail" aria-live="polite"></div>
+{% endmacro %}

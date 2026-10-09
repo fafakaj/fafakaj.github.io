@@ -1,73 +1,81 @@
 {% extends "base.html" %}
-{% block content %}
-<section id="about" class="section">
-  <h2>Обо мне</h2>
-  <p class="lead">{{ person.about }}</p>
-
-  <div class="callout" id="pdf">
-    <p><strong>Нужен файл?</strong> Скачайте PDF:</p>
-    <p>
-      <a href="{{ root }}pdf/{{ pdf.resume }}" download>Резюме</a> <span class="muted">(1–2 страницы)</span>
-      <span class="sep">·</span>
-      <a href="{{ root }}pdf/{{ pdf.portfolio }}" download>Полное портфолио</a> <span class="muted">(все проекты подробно)</span>
-    </p>
+{% from "icons.html" import icons %}
+{% block body %}
+<header id="dhead" class="container">
+  <div class="row{% if not person.photo %} nophoto{% endif %}">
+    {% if person.photo %}
+    <div id="dpic"><img src="{{ root }}{{ person.photo }}" class="ppic" alt="{{ person.name }}"></div>
+    {% endif %}
+    <div id="ddesc">
+      <h1>{{ person.name }}</h1>
+      <h2>{{ person.tagline }}</h2>
+      {{ icons(contacts, root, pdf) }}
+    </div>
   </div>
-</section>
+</header>
 
-<section id="education" class="section">
-  <h2>Образование</h2>
-  {% for e in education %}
-  <article class="item">
-    <p class="date">{{ e.period }}</p>
-    <h3><a href="{{ e.url }}">{{ e.university }}</a>, {{ e.course }}</h3>
-    <p><strong>Факультет:</strong> {{ e.faculty }}</p>
-    <p><strong>Направление:</strong> {{ e.direction }}</p>
-    <p><strong>Программа:</strong> {{ e.program }}</p>
-    <p><strong>Трек:</strong> {{ e.track }}</p>
-  </article>
-  {% endfor %}
-</section>
+<hr>
 
-<section id="skills" class="section">
-  <h2>Навыки</h2>
-  {% for s in skills %}
-  <p><strong>{{ s.group }}:</strong> {{ s["items"] | join(", ") }}</p>
-  {% endfor %}
-</section>
+<main>
+  <section id="history" class="container" aria-label="Путь">
+    {% for t in timeline %}
+    <div class="entry row">
+      <div class="timespan">{{ t.period }}</div>
+      <div class="ico">
+        <div class="entry-dot"></div>
+        {% if t.logo %}<img src="{{ root }}{{ t.logo }}" alt="">{% else %}<div class="logo-text">{{ t.logo_text }}</div>{% endif %}
+      </div>
+      <div class="desc">{{ t.text | md }}</div>
+    </div>
+    {% endfor %}
+  </section>
 
-{% if projects %}
-<section id="projects" class="section">
-  <h2>Проекты</h2>
-  {% for p in projects %}
-  <article class="item">
-    <p class="date">{{ p.year }}{% if p.kind %}, {{ p.kind | lower }}{% endif %}</p>
-    <h3><a href="{{ root }}projects/{{ p.slug }}/">{{ p.title }}</a></h3>
-    <p>{{ p.summary }}</p>
-    {% if p.stack %}<p><strong>Стек:</strong> {{ p.stack | join(", ") }}</p>{% endif %}
-    {% if p.links %}<p><strong>Ссылки:</strong> {% for l in p.links %}<a href="{{ l.url }}">{{ l.label }}</a>{% if not loop.last %} <span class="sep">·</span> {% endif %}{% endfor %}</p>{% endif %}
-  </article>
-  {% endfor %}
-</section>
-{% endif %}
+  {% if projects %}
+  <section id="projects" class="container">
+    <h3 class="ctitle">проекты</h3>
+    {% for p in projects %}
+    <div class="project">
+      {% if p.thumb %}<div class="pico"><a href="{{ root }}projects/{{ p.slug }}/"><img src="{{ root }}{{ p.thumb }}" alt=""></a></div>{% endif %}
+      <div class="pdesc">
+        <a href="{{ root }}projects/{{ p.slug }}/">{{ p.title }}</a> — {{ p.summary }}
+        {% if p.stack %}<span class="pstack">{{ p.stack | join(", ") }}</span>{% endif %}
+      </div>
+      <div class="pend"></div>
+    </div>
+    {% endfor %}
+  </section>
+  {% endif %}
 
-{% if achievements %}
-<section id="achievements" class="section">
-  <h2>Хакатоны и достижения</h2>
-  {% for a in achievements %}
-  <article class="item">
-    <p class="date">{{ a.date }}</p>
-    <h3>{% if a.url %}<a href="{{ a.url }}">{{ a.title }}</a>{% else %}{{ a.title }}{% endif %}</h3>
-    {% if a.result %}<p><strong>Результат:</strong> {{ a.result }}</p>{% endif %}
-    {% if a.description %}<p>{{ a.description }}</p>{% endif %}
-  </article>
-  {% endfor %}
-</section>
-{% endif %}
+  {% if achievements %}
+  <section id="achievements" class="container">
+    <h3 class="ctitle">хакатоны и достижения</h3>
+    {% for a in achievements %}
+    <div class="pub">
+      <div class="pub-title">{% if a.url %}<a href="{{ a.url }}">{{ a.title }}</a>{% else %}{{ a.title }}{% endif %}</div>
+      {% if a.result %}<div class="pub-venue">{{ a.result }}</div>{% endif %}
+      <div class="pub-authors">{{ a.date }}{% if a.description %}. {{ a.description }}{% endif %}</div>
+    </div>
+    {% endfor %}
+  </section>
+  {% endif %}
 
-<section id="contacts" class="section">
-  <h2>Контакты</h2>
-  {% for c in contacts %}
-  <p><strong>{{ c.label }}:</strong> <a href="{{ c.url }}">{{ c.value }}</a></p>
-  {% endfor %}
-</section>
+  <section id="skills" class="container">
+    <h3 class="ctitle">навыки</h3>
+    {% for s in skills %}
+    <p class="skill"><span class="skill-group">{{ s.group }}:</span> {{ s["items"] | join(", ") }}</p>
+    {% endfor %}
+  </section>
+
+  <section id="pdf" class="container">
+    <h3 class="ctitle">резюме в pdf</h3>
+    <ul class="tul">
+      <li class="til tilb"><a href="{{ root }}pdf/{{ pdf.resume }}" download>Резюме, 1–2 страницы</a></li>
+      <li class="til"><a href="{{ root }}pdf/{{ pdf.portfolio }}" download>Полное портфолио</a></li>
+    </ul>
+  </section>
+</main>
+
+<footer class="container" id="footer">
+  {{ person.full_name }}. Обновлено {{ updated }}.
+</footer>
 {% endblock %}

@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 {% block title %}Страница не найдена — {{ person.name }}{% endblock %}
-{% block content %}
-<h2>Страница не найдена</h2>
-<p>По этому адресу ничего нет. Откройте <a href="{{ root }}">главную страницу</a>.</p>
+{% block body %}
+<header class="container minihead">
+  <a href="{{ root }}" class="mininame">{{ person.name }}</a>
+</header>
+<hr>
+<main class="container">
+  <h3 class="ctitle">страница не найдена</h3>
+  <p>По этому адресу ничего нет. Откройте <a href="{{ root }}">главную страницу</a>.</p>
+</main>
 {% endblock %}

@@ -5,13 +5,16 @@ PDF собирает Typst (команда typst должна быть в PATH).
 """
 
 import argparse
+import codecs
 import datetime as dt
+import re
 import shutil
 import subprocess
 from pathlib import Path
 
 import yaml
 from jinja2 import Environment, FileSystemLoader
+from markupsafe import Markup, escape
 
 ROOT = Path(__file__).resolve().parent
 PDF = {"resume": "Lesnitsky_Resume.pdf", "portfolio": "Lesnitsky_Portfolio.pdf"}
@@ -21,20 +24,23 @@ def load(path: Path) -> dict:
     data = yaml.safe_load(path.read_text(encoding="utf-8"))
     data.setdefault("projects", [])
     data.setdefault("achievements", [])
+    data.setdefault("timeline", [])
     slugs = [p["slug"] for p in data["projects"]]
     if len(slugs) != len(set(slugs)):
         raise SystemExit("Повтор slug в projects: у каждого проекта свой slug")
     return data
 
 
-def menu(data: dict) -> list[dict]:
-    items = [("about", "Обо мне"), ("skills", "Навыки")]
-    if data["projects"]:
-        items.append(("projects", "Проекты"))
-    if data["achievements"]:
-        items.append(("achievements", "Достижения"))
-    items += [("contacts", "Контакты"), ("pdf", "PDF")]
-    return [{"id": i, "label": label, "href": f"#{i}"} for i, label in items]
+LINK = re.compile(r"\[([^\]]+)\]\((https?://[^)\s]+|mailto:[^)\s]+|/[^)\s]*)\)")
+
+
+def md(text: str) -> Markup:
+    """Мини-разметка для текста шкалы: абзацы через пустую строку, ссылки [текст](url)."""
+    paras = []
+    for para in str(text).strip().split("\n\n"):
+        html = LINK.sub(lambda m: f'<a href="{m[2]}">{m[1]}</a>', str(escape(para.strip())))
+        paras.append(f"<p>{html}</p>")
+    return Markup("\n".join(paras))
 
 
 def build_site(data: dict, out: Path) -> None:
@@ -44,9 +50,10 @@ def build_site(data: dict, out: Path) -> None:
         trim_blocks=True,
         lstrip_blocks=True,
     )
+    env.filters["md"] = md
+    env.filters["rot13"] = lambda s: codecs.encode(str(s), "rot13")
     common = {
         **data,
-        "menu": menu(data),
         "pdf": PDF,
         "root": "/",
         "updated": dt.date.today().strftime("%d.%m.%Y"),
@@ -59,10 +66,10 @@ def build_site(data: dict, out: Path) -> None:
         html = env.get_template(template).render(**common, path=page, **extra)
         path.write_text(html, encoding="utf-8")
 
-    render("index.html", "index.html", active=None)
-    render("404.html", "404.html", active=None)
+    render("index.html", "index.html")
+    render("404.html", "404.html")
     for p in data["projects"]:
-        render("project.html", f"projects/{p['slug']}/index.html", p=p, active="projects")
+        render("project.html", f"projects/{p['slug']}/index.html", p=p)
 
     shutil.copytree(ROOT / "static", out / "static", dirs_exist_ok=True)
     (out / ".nojekyll").write_text("")
