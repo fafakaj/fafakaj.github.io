@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Social — {{ person.name }}{% endblock %}
+{% block heading %}Social{% endblock %}
+{% block main %}
+<main class="content wide">
+  <section class="cards">
+    <div class="metadata"></div>
+    <article class="card full">
+      <div class="card-body">
+        <p>Здесь мои контакты. По вопросам стажировок и работы пишите в Telegram или на почту.</p>
+        <p>Резюме в PDF лежит во вкладке <a href="{{ root }}resume/">Resume</a>.</p>
+      </div>
+    </article>
+    <div class="links full">
+      {% for c in contacts %}
+      {% set is_mail = c.url.startswith("mailto:") %}
+      <a class="link" {% if is_mail %}href="#" data-email="{{ c.value | rot13 }}"{% else %}href="{{ c.url }}"{% endif %} rel="noopener">
+        <article>
+          <div class="card-header">{{ c.label }}</div>
+          <div class="card-body">
+            {% if is_mail %}<span class="brand mail">{{ icon("mail") }}</span>{% else %}<img class="brand" src="{{ root }}static/icons/brand-{{ c.label | lower }}.svg" alt="">{% endif %}
+          </div>
+        </article>
+      </a>
+      {% endfor %}
+      <a class="link" href="{{ root }}resume/">
+        <article>
+          <div class="card-header">Резюме</div>
+          <div class="card-body"><span class="brand cv">{{ icon("file-text") }}</span></div>
+        </article>
+      </a>
+    </div>
+  </section>
+</main>
+{% endblock %}

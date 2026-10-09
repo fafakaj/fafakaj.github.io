@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}{% if p %}{{ p.title }} — {% endif %}Code — {{ person.name }}{% endblock %}
+{% block description %}{% if p %}{{ p.summary }}{% else %}Проекты с хакатонов: описание, стек, скриншоты и запуск.{% endif %}{% endblock %}
+{% block heading %}Code{% endblock %}
+
+{% macro item(x) %}
+<a class="button{% if p and p.slug == x.slug %} active{% endif %}" href="{{ root }}code/{{ x.slug }}/"{% if p and p.slug == x.slug %} aria-current="page"{% endif %}>
+  <div><span>{{ x.title }}</span></div>
+</a>
+{% endmacro %}
+
+{% macro preview(x) %}
+<a class="card overview" href="{{ root }}code/{{ x.slug }}/">
+  {% if x.images %}
+  <div class="card-header"><div>{{ icon("image") }}<span><b>{{ x.title }}</b> <span class="origin">/ скриншот</span></span></div></div>
+  <div class="card-body paddingless"><img src="{{ root }}{{ x.images[0].src }}" alt="{{ x.images[0].caption }}" loading="lazy"></div>
+  {% elif x.snippet %}
+  <div class="card-header"><div>{{ icon("code-xml") }}<span><b>{{ x.title }}</b> <span class="origin">/ запуск</span></span></div></div>
+  <div class="card-body paddingless snippet"><pre><code>{{ x.snippet | code }}</code></pre></div>
+  {% else %}
+  <div class="card-header"><div>{{ icon("file-text") }}<span><b>{{ x.title }}</b></span></div></div>
+  <div class="card-body"><p>{{ x.summary }}</p></div>
+  {% endif %}
+</a>
+{% endmacro %}
+
+{% block main %}
+<main class="content split">
+  <details class="aside" open>
+    <summary class="aside-toggle">{{ icon("menu") }}<span>{{ p.title if p else "Обзор" }}</span></summary>
+    <div class="aside-list">
+      <a class="button{% if not p %} active{% endif %}" href="{{ root }}code/"{% if not p %} aria-current="page"{% endif %}><div><span>Обзор</span></div></a>
+      <div class="category">Финалы</div>
+      {% for x in featured %}{{ item(x) }}{% endfor %}
+      <div class="category">По дате</div>
+      {% for x in by_date %}{{ item(x) }}{% endfor %}
+    </div>
+  </details>
+
+  <section class="cards">
+  {% if not p %}
+    <div class="metadata"><div class="date">{{ icon("calendar") }}<span>{% if by_date %}{{ by_date[0].date | human_date }}{% else %}Проектов пока нет{% endif %}</span></div></div>
+    <article class="card full">
+      <div class="card-header"><div>{{ icon("info") }}<span>О разделе</span></div></div>
+      <div class="card-body">
+        <p>Здесь собраны проекты с хакатонов: задача, решение, результат, стек, скриншоты и команды запуска.</p>
+        <p>В меню слева есть раздел <i>Финалы</i>: в нём проекты, которые прошли в финал хакатона. Раздел <i>По дате</i> показывает все проекты, сначала новые.</p>
+        <p>Ниже карточки проектов. Нажмите на карточку, чтобы открыть проект.</p>
+      </div>
+    </article>
+    {% for x in by_date %}{{ preview(x) }}{% endfor %}
+  {% else %}
+    <div class="metadata"><div class="date">{{ icon("calendar") }}<span>{{ p.date | human_date if p.date else p.year }}</span></div></div>
+    <article class="card full">
+      <div class="card-header"><div>{{ icon("info") }}<span>О проекте</span></div></div>
+      <div class="card-body">
+        <h2 class="project-title">{{ p.title }}</h2>
+        <p class="event">{{ p.event }}</p>
+        <p>{{ p.summary }}</p>
+        <p class="stack">{% for s in p.stack %}<span class="tag">{{ s }}</span>{% endfor %}</p>
+        {% if p.links %}<p>{% for l in p.links %}<a class="ext" href="{{ l.url }}">{{ icon("external-link") }}{{ l.label }}</a>{% if not loop.last %} {% endif %}{% endfor %}</p>{% endif %}
+      </div>
+    </article>
+    {% for key, heading, width in [("task", "Задача", "half"), ("result", "Результат", "half"), ("solution", "Решение", "full")] %}
+    {% if p[key] %}
+    <article class="card {{ width }}">
+      <div class="card-header"><div>{{ icon("file-text") }}<span>{{ heading }}</span></div></div>
+      <div class="card-body">{% for para in p[key].split("\n\n") %}<p>{{ para }}</p>{% endfor %}</div>
+    </article>
+    {% endif %}
+    {% endfor %}
+    {% for img in p.images or [] %}
+    <article class="card full">
+      <div class="card-header"><div>{{ icon("image") }}<span>{{ img.caption or "Скриншот" }}</span></div></div>
+      <div class="card-body paddingless"><img src="{{ root }}{{ img.src }}" alt="{{ img.caption or p.title }}" loading="lazy"></div>
+    </article>
+    {% endfor %}
+    {% if p.snippet %}
+    <article class="card full">
+      <div class="card-header"><div>{{ icon("code-xml") }}<span>Запуск</span></div></div>
+      <div class="card-body paddingless snippet"><pre><code>{{ p.snippet | code }}</code></pre></div>
+    </article>
+    {% endif %}
+  {% endif %}
+  </section>
+</main>
+{% endblock %}

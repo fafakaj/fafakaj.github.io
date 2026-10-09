@@ -1,12 +1,14 @@
 // Общие стили и блоки для резюме и полного портфолио.
-// Стиль — как у сайта (образец karpathy.ai): серый текст, синие ссылки, зелёный результат.
+// Стиль — как у сайта (образец simon.lecoq.io): тёмные плашки заголовков, бежево-серая палитра.
+// Фон страницы белый, чтобы PDF было удобно печатать.
 
-#let ink = rgb("#333333")
-#let muted = rgb("#999999")
-#let faint = rgb("#bbbbbb")
-#let line-col = rgb("#cfcfcf")
-#let link-col = rgb("#0000ee")
-#let venue = rgb("#009900")
+#let ink = rgb("#4B4A3F")
+#let paper = rgb("#D7D2B8")
+#let muted = rgb("#7d7a68")
+#let faint = rgb("#a19c86")
+#let line-col = rgb("#B3AE99")
+#let link-col = rgb("#003A6B")
+#let venue = rgb("#4B4A3F")
 
 #let data = yaml(sys.inputs.at("data", default: "/data/portfolio.yaml"))
 #let person = data.person
@@ -19,14 +21,14 @@
 #let projects = list-or-empty("projects")
 #let achievements = list-or-empty("achievements")
 
-// Ссылки сайта вида /projects/x/ в PDF ведут на полный адрес.
+// Ссылки сайта вида /code/x/ в PDF ведут на полный адрес.
 #let full-url(url) = if url.starts-with("/") { site.trim("/", at: end) + url } else { url }
 
 #let setup(title: "", doc) = {
   set document(title: person.full_name + " — " + title, author: person.full_name)
   set page(
     paper: "a4",
-    margin: (x: 1.9cm, top: 1.7cm, bottom: 1.8cm),
+    margin: (x: 1.9cm, top: 1.4cm, bottom: 1.6cm),
     footer: context {
       set text(size: 8pt, fill: faint)
       person.full_name + " — " + title
@@ -37,22 +39,23 @@
   set text(font: "Roboto", size: 10pt, fill: ink, lang: "ru")
   set par(leading: 0.55em, spacing: 0.85em)
   show link: set text(fill: link-col)
-  show link: underline.with(stroke: 0.4pt + link-col, offset: 1.5pt)
-  // Заголовок раздела: крупный, тонкий, строчными — как .ctitle на сайте.
-  show heading.where(level: 1): it => block(above: 1.6em, below: 0.75em,
-    text(size: 17pt, weight: "regular", lower(it.body)))
-  show heading.where(level: 2): it => block(above: 1.1em, below: 0.5em,
-    text(size: 12pt, weight: "regular", lower(it.body)))
+  // Заголовок раздела: тёмная плашка с квадратом, как шапка карточки на сайте.
+  show heading.where(level: 1): it => block(
+    above: 1.15em, below: 0.6em, width: 100%, fill: ink,
+    inset: (x: 8pt, top: 4pt, bottom: 5pt), sticky: true,
+    text(size: 11.5pt, weight: "regular", fill: paper)[■ #it.body])
+  show heading.where(level: 2): it => block(above: 1em, below: 0.45em, sticky: true,
+    text(size: 10.5pt, weight: "bold", fill: ink)[■ #it.body])
   doc
 }
 
-// Линия с градиентом, как <hr> на сайте.
-#let fade-rule() = block(above: 1em, below: 1em, rect(
-  width: 100%,
-  height: 0.6pt,
-  stroke: none,
-  fill: gradient.linear(white, rgb(0, 0, 0, 75%), white),
-))
+// Разделитель, как под вкладками сайта: толстая линия и ряд точек.
+#let fade-rule() = block(above: 1em, below: 1em, width: 100%, {
+  line(length: 100%, stroke: 1.6pt + ink)
+  v(2.5pt)
+  box(width: 100%, height: 4pt, clip: true,
+    repeat(box(width: 14pt, align(left, circle(radius: 1.1pt, fill: ink)))))
+})
 
 // Шапка: имя, курсивная фраза, контакты.
 #let header() = {
@@ -60,7 +63,7 @@
   items.push([Сайт: #link(site, site-short)])
   align(center, stack(
     spacing: 9pt,
-    text(size: 24pt, weight: "regular", person.full_name),
+    text(size: 24pt, weight: "regular", fill: ink, person.full_name),
     text(size: 11.5pt, style: "italic", fill: muted, person.tagline),
     text(size: 9.5pt, items.join(h(0.5em) + text(fill: faint, "|") + h(0.5em))),
   ))
@@ -103,7 +106,7 @@
 
 #let event-line(p) = {
   let ev = p.at("event", default: none)
-  if ev != none { text(size: 9pt, fill: venue, ev) }
+  if ev != none { text(size: 9pt, fill: venue, style: "italic", ev) }
 }
 
 #let stack-line(p) = {
@@ -122,7 +125,7 @@
 // extra-only: только достижения без страницы проекта (для резюме, где результат уже под проектом).
 #let achievements-section(extra-only: false, title: "Хакатоны и достижения") = {
   let shown = if extra-only {
-    achievements.filter(a => not a.at("url", default: "").starts-with("/projects/"))
+    achievements.filter(a => not a.at("url", default: "").starts-with("/code/"))
   } else { achievements }
   if shown.len() > 0 [
     #heading(title)
@@ -130,13 +133,13 @@
       let url = a.at("url", default: none)
       let title = if url != none { link(full-url(url), a.title) } else { a.title }
       block(
-        stroke: (left: 2.5pt + rgb("#aaaaaa")),
+        stroke: (left: 3pt + line-col),
         inset: (left: 8pt, y: 2pt),
         below: 0.65em,
         breakable: false,
         {
           title
-          if a.at("result", default: none) != none { h(0.4em); text(fill: venue, a.result) }
+          if a.at("result", default: none) != none { h(0.4em); text(fill: venue, weight: "bold", a.result) }
           linebreak()
           text(size: 9pt)[#a.date#if a.at("description", default: none) != none [. #a.description]]
         },

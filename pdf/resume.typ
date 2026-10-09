@@ -15,7 +15,7 @@
   = Проекты
   #for p in shown {
     block(below: 0.85em, breakable: false, {
-      link(site + "projects/" + p.slug + "/", p.title)
+      link(site + "code/" + p.slug + "/", p.title)
       [ — #p.summary]
       linebreak()
       event-line(p)

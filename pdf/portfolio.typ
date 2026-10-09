@@ -16,7 +16,7 @@
     if i == 0 { pagebreak(weak: true); [= Проекты] } else { fade-rule() }
     block(breakable: false, width: 100%, {
       block(below: 0.7em, sticky: true, {
-        text(size: 17pt, link(site + "projects/" + p.slug + "/", text(fill: ink, p.title)))
+        text(size: 17pt, link(site + "code/" + p.slug + "/", text(fill: ink, p.title)))
         linebreak()
         event-line(p)
       })

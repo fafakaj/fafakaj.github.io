@@ -3,11 +3,11 @@ person:
   name: Александр Лесницкий
   full_name: Лесницкий Александр Маркович
   role: Студент 2 курса, инженерия ИИ
-  tagline: Учусь строить системы с искусственным интеллектом 🧠🤖
-  photo: tests/sample.png
-  about: Учусь в Университете ИТМО по программе «Нейротехнологии и программирование»,
-    трек «Инженерия искусственного интеллекта». Пишу на Python, работаю с библиотеками
-    для машинного обучения, SQL и Docker.
+  tagline: Now I'm a little motivated.
+  photo: null
+  about: Студент 2 курса Университета ИТМО, трек «Инженерия искусственного интеллекта».
+    Пишу на Python, работаю с данными и моделями машинного обучения. За 2026 год —
+    пять командных хакатонов, три финала.
 contacts:
 - label: Telegram
   value: '@yvldxe'
@@ -18,6 +18,33 @@ contacts:
 - label: GitHub
   value: fafakaj
   url: https://github.com/fafakaj
+profile:
+  handle: '@yvldxe / fafakaj'
+  facts:
+  - icon: building-2
+    text: Университет ИТМО
+  - icon: graduation-cap
+    text: ПИиКТ, 2 курс
+  - icon: brain
+    text: Трек «Инженерия ИИ»
+  - icon: trophy
+    text: 3 финала хакатонов в 2026
+feed:
+- date: 2026-09-27
+  title: Космохакатон 2026 — финал, 3 место
+  project: floodvalue
+- date: 2026-09-22
+  title: Нефтекод 2.0
+  project: neftekod
+- date: 2025-10
+  title: Внутренний хакатон по Data Science — 3 место
+  text: 'Первый хакатон: разведочный анализ данных (EDA) и выводы по датасету.'
+- date: 2025-09
+  title: Университет ИТМО
+  text: Поступил в [Университет ИТМО](https://itmo.ru) на факультет ПИиКТ, направление
+    «Программная инженерия». Программа «Нейротехнологии и программирование», трек
+    «Инженерия искусственного интеллекта».
+  image: static/img/itmo-logo.png
 education:
 - period: 2025 — н. в.
   university: Университет ИТМО
@@ -27,77 +54,128 @@ education:
   direction: Программная инженерия
   program: Нейротехнологии и программирование
   track: Инженерия искусственного интеллекта
-timeline:
-- period: '2026'
-  logo_text: Хакатон
-  text: 'Тестовая запись: [хакатон](https://example.com), второе место.
-
-
-    Второй абзац записи.'
-- period: 2025 —
-  logo: tests/sample.png
-  text: Учусь на 2 курсе [Университета ИТМО](https://itmo.ru), факультет ПИиКТ, направление
-    «Программная инженерия». Программа «Нейротехнологии и программирование», трек
-    «Инженерия искусственного интеллекта».
-- period: 2021 — 2025
-  logo_text: Школа
-  text: Тестовая запись про школу.
 skills:
 - group: Языки
   items:
   - Python
   - SQL
   - JavaScript
+- group: Анализ данных
+  items:
+  - pandas
+  - NumPy
+  - Matplotlib
+  - Seaborn
+  - Jupyter
+  - EDA
 - group: Машинное обучение
   items:
-  - Библиотеки для ML на Python
+  - scikit-learn
+  - LightGBM
+  - PyTorch
+  - валидация и метрики моделей
+- group: Бэкенд и данные
+  items:
+  - FastAPI
+  - REST API
+  - PostgreSQL
 - group: Инструменты
   items:
-  - Docker
   - Git
-projects:
-- slug: demo-api
-  title: 'Тестовый проект: REST API'
-  year: 2026
-  kind: Учебный проект
-  summary: Тестовые данные для проверки вёрстки. Сервис с REST API и фронтендом.
-  stack:
-  - Python
-  - FastAPI
-  - PostgreSQL
   - Docker
-  links:
-  - label: GitHub
-    url: https://github.com/fafakaj
-  - label: Демо
-    url: https://example.com
-  task: 'Первый абзац задачи. Нужно было сделать сервис, который принимает данные
-    и отдаёт результат.
-
-
-    Второй абзац задачи с подробностями.'
-  solution: 'Описание решения: архитектура, ключевые решения, что было сложно.'
-  result: 'Результат: сервис работает, покрыт тестами, развёрнут в Docker.'
-  images:
-  - src: tests/sample.png
-    caption: Главный экран
-  resume: true
-  thumb: tests/sample.png
-- slug: demo-ml
-  title: 'Тестовый проект: ML-модель'
-  year: 2025
+  - Linux
+  - pytest
+projects:
+- slug: floodvalue
+  title: FloodValue — карта затоплений по радарным снимкам
+  year: 2026
   kind: Хакатон
-  summary: Второй тестовый проект без скриншотов и без кейса.
+  date: 2026-09-27
+  featured: true
+  event: Космохакатон 2026, 25–27 сентября, финал, 3 место
+  summary: По радарным снимкам Sentinel-1 модель строит вероятностную карту воды,
+    оценивает ожидаемый ущерб объектам и планирует дополнительную съёмку в рамках
+    бюджета.
   stack:
   - Python
+  - PyTorch
+  - U-Net
   - scikit-learn
-  thumb: tests/sample.png
+  - rasterio
+  - FastAPI
+  - React
+  - MapLibre
+  task: 'Помочь инфраструктурному оператору при наводнении: понять, где вода, какой
+    ущерб ожидается у объектов и какую дополнительную спутниковую съёмку заказать
+    при ограниченном бюджете.'
+  solution: Компактная U-Net (ансамбль из 5 моделей) сегментирует воду на снимках
+    Sentinel-1 из открытого датасета Sen1Floods11. Вероятности откалиброваны методом
+    Платта. По карте воды считается ожидаемый ущерб 10 объектов, а три стратегии выбирают
+    дополнительную съёмку в пределах бюджета. Результат показан на интерактивной карте.
+  result: Финал хакатона, 3 место. На отложенной тестовой выборке IoU модели 0,725
+    против 0,677 у порогового бейзлайна.
+  thumb: static/img/kosmo-thumb.jpg
+  images:
+  - src: static/img/kosmo.jpg
+    caption: Интерфейс с наблюдениями на карте мира
+  snippet:
+    lang: bash
+    code: 'make setup && make data && make split
+
+      make train GPU=1   # U-Net, ансамбль из 5 seed
+
+      make all CHIP=Sri-Lanka_713926 BUDGET=5000'
+  resume: true
+- slug: neftekod
+  title: Рекомендации оператору установки гидроочистки
+  year: 2026
+  kind: Хакатон
+  featured: false
+  event: Нефтекод 2.0, 8–22 сентября 2026
+  summary: Мультиагентная система по данным установки прогнозирует качество дизельного
+    топлива и выдаёт оператору проверенную рекомендацию или обоснованный отказ.
+  stack:
+  - Python
+  - pandas
+  - NumPy
+  - pytest
+  task: По телеметрии установки и лабораторным анализам оценить качество товарного
+    дизельного топлива (сера, T95, цетановое число, плотность) и предложить оператору
+    безопасное управляющее воздействие.
+  solution: 'Четыре детерминированных агента без LLM: качество, надёжность, оптимизация
+    и оркестратор, который заново проверяет каждую рекомендацию по независимым источникам.
+    Прогноз серы проверен бэктестом на истории. Если данных не хватает, система отказывается
+    и объясняет причину.'
+  result: Рекомендация выдаётся карточкой по семи блокам ТЗ и в JSON. Прогон детерминирован,
+    проект покрыт 346 тестами.
+  resume: true
 achievements:
+- date: Сентябрь — октябрь 2026
+  title: Хакатон Почтатеха
+  result: финал, 5 место
+  description: Цифровой двойник отделения Почты России.
+  url: /code/post-digital-twin/
+- date: Октябрь 2026
+  title: RLT.Hack (Росэлторг)
+  result: финал, 5 место
+  description: Подбор поставщиков для госзакупок.
+  url: /code/rlt-suppliers/
+- date: Сентябрь 2026
+  title: Космохакатон 2026
+  result: финал, 3 место
+  description: FloodValue — карта затоплений по радарным снимкам.
+  url: /code/floodvalue/
+- date: Сентябрь 2026
+  title: Нефтекод 2.0
+  result: участие
+  description: Рекомендации оператору установки гидроочистки.
+  url: /code/neftekod/
 - date: Май 2026
-  title: Тестовый хакатон
-  result: 2 место
-  description: Описание участия.
-  url: https://example.com
-- date: Март 2026
-  title: Второй тестовый хакатон
-  result: Финалист
+  title: Tender Hack
+  result: участие
+  description: Агрегатор цен с маркетплейсов.
+  url: /code/tender-hack/
+- date: Октябрь 2025
+  title: Внутренний хакатон по Data Science
+  result: 3 место
+  description: Разведочный анализ данных (EDA).
