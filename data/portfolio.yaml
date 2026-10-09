@@ -10,7 +10,7 @@ person:
   # Фраза под именем на сайте и в PDF (как у karpathy.ai).
   tagline: Now I'm a little motivated.
   # Круглое фото в шапке: положите файл в static/img/ и укажите путь. Пусто — без фото.
-  photo:
+  photo: static/img/avatar.jpg
   about: >-
     Студент 2 курса Университета ИТМО, трек «Инженерия искусственного интеллекта».
     Пишу на Python, работаю с данными и моделями машинного обучения.
@@ -40,6 +40,7 @@ timeline:
       и [хакатон Почтатеха](/projects/post-digital-twin/) (5 место).
       Проекты и результаты — ниже.
   - period: 2025 —
+    logo: static/img/itmo-logo.png
     logo_text: ИТМО
     text: >-
       Учусь на 2 курсе [Университета ИТМО](https://itmo.ru), факультет ПИиКТ,

@@ -133,6 +133,7 @@ hr {
   .ico { grid-column: span 2; }
   .desc { grid-column: span 8; font-size: 16px; padding-left: 12px; }
   .ico img, .logo-text { margin-left: 6px; }
+  .logo-text { font-size: 10px; overflow-wrap: anywhere; padding: 2px; box-sizing: border-box; }
 }
 
 /* Разделы */
