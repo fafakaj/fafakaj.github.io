@@ -1,0 +1,58 @@
+# Единый источник данных: из него собираются сайт (build.py) и оба PDF (pdf/*.typ).
+# Пустой список (projects: [] или achievements: []) скрывает раздел на сайте и в PDF.
+
+site_url: https://fafakaj.github.io/
+
+person:
+  name: Александр Лесницкий
+  full_name: Лесницкий Александр Маркович
+  role: Студент 2 курса, инженерия ИИ
+  about: >-
+    Учусь в Университете ИТМО по программе «Нейротехнологии и программирование»,
+    трек «Инженерия искусственного интеллекта». Пишу на Python, работаю
+    с библиотеками для машинного обучения, SQL и Docker.
+
+contacts:
+  - label: Telegram
+    value: "@yvldxe"
+    url: https://t.me/yvldxe
+  - label: Почта
+    value: amlesnitsky@gmail.com
+    url: mailto:amlesnitsky@gmail.com
+  - label: GitHub
+    value: fafakaj
+    url: https://github.com/fafakaj
+
+education:
+  - period: 2025 — н. в.
+    university: Университет ИТМО
+    url: https://itmo.ru
+    course: 2 курс
+    faculty: Программная инженерия и компьютерные технологии (ПИиКТ)
+    direction: Программная инженерия
+    program: Нейротехнологии и программирование
+    track: Инженерия искусственного интеллекта
+
+# Группы навыков. Чтобы резюме было сильнее, назовите конкретные библиотеки
+# (например: NumPy, pandas, scikit-learn, PyTorch).
+skills:
+  - group: Языки
+    items: [Python, SQL, JavaScript]
+  - group: Машинное обучение
+    items: [Библиотеки для ML на Python]
+  - group: Инструменты
+    items: [Docker, Git]
+
+# Проект. Поля:
+#   slug       — адрес страницы: /projects/<slug>/
+#   title, year, kind (например «Учебный проект», «Хакатон»)
+#   summary    — одна-две фразы для главной и резюме
+#   stack      — список технологий
+#   links      — список {label, url}
+#   task, solution, result — кейс для страницы проекта и полного PDF
+#   images     — список {src: static/img/<файл>, caption}
+#   resume     — true: проект попадает в короткое резюме
+projects: []
+
+# Хакатоны и достижения. Поля: date, title, result, description, url (необязательно).
+achievements: []

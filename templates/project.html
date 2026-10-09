@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}{{ p.title }} — {{ person.name }}{% endblock %}
+{% block description %}{{ p.summary }}{% endblock %}
+{% block content %}
+<article class="project">
+  <p class="back"><a href="{{ root }}#projects">← Все проекты</a></p>
+  <h2>{{ p.title }}</h2>
+  <p class="date">{{ p.year }}{% if p.kind %}, {{ p.kind | lower }}{% endif %}</p>
+  <p class="lead">{{ p.summary }}</p>
+
+  {% if p.stack %}<p><strong>Стек:</strong> {{ p.stack | join(", ") }}</p>{% endif %}
+  {% if p.links %}<p><strong>Ссылки:</strong> {% for l in p.links %}<a href="{{ l.url }}">{{ l.label }}</a>{% if not loop.last %} <span class="sep">·</span> {% endif %}{% endfor %}</p>{% endif %}
+
+  {% for key, heading in [("task", "Задача"), ("solution", "Решение"), ("result", "Результат")] %}
+  {% if p[key] %}
+  <section class="case">
+    <h3>{{ heading }}</h3>
+    {% for para in p[key].split("\n\n") %}<p>{{ para }}</p>{% endfor %}
+  </section>
+  {% endif %}
+  {% endfor %}
+
+  {% if p.images %}
+  <section class="case">
+    <h3>Скриншоты</h3>
+    {% for img in p.images %}
+    <figure>
+      <img src="{{ root }}{{ img.src }}" alt="{{ img.caption or p.title }}" loading="lazy">
+      {% if img.caption %}<figcaption>{{ img.caption }}</figcaption>{% endif %}
+    </figure>
+    {% endfor %}
+  </section>
+  {% endif %}
+</article>
+{% endblock %}

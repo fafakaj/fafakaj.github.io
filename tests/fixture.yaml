@@ -1,0 +1,84 @@
+site_url: https://fafakaj.github.io/
+person:
+  name: Александр Лесницкий
+  full_name: Лесницкий Александр Маркович
+  role: Студент 2 курса, инженерия ИИ
+  about: Учусь в Университете ИТМО по программе «Нейротехнологии и программирование»,
+    трек «Инженерия искусственного интеллекта». Пишу на Python, работаю с библиотеками
+    для машинного обучения, SQL и Docker.
+contacts:
+- label: Telegram
+  value: '@yvldxe'
+  url: https://t.me/yvldxe
+- label: Почта
+  value: amlesnitsky@gmail.com
+  url: mailto:amlesnitsky@gmail.com
+- label: GitHub
+  value: fafakaj
+  url: https://github.com/fafakaj
+education:
+- period: 2025 — н. в.
+  university: Университет ИТМО
+  url: https://itmo.ru
+  course: 2 курс
+  faculty: Программная инженерия и компьютерные технологии (ПИиКТ)
+  direction: Программная инженерия
+  program: Нейротехнологии и программирование
+  track: Инженерия искусственного интеллекта
+skills:
+- group: Языки
+  items:
+  - Python
+  - SQL
+  - JavaScript
+- group: Машинное обучение
+  items:
+  - Библиотеки для ML на Python
+- group: Инструменты
+  items:
+  - Docker
+  - Git
+projects:
+- slug: demo-api
+  title: 'Тестовый проект: REST API'
+  year: 2026
+  kind: Учебный проект
+  summary: Тестовые данные для проверки вёрстки. Сервис с REST API и фронтендом.
+  stack:
+  - Python
+  - FastAPI
+  - PostgreSQL
+  - Docker
+  links:
+  - label: GitHub
+    url: https://github.com/fafakaj
+  - label: Демо
+    url: https://example.com
+  task: 'Первый абзац задачи. Нужно было сделать сервис, который принимает данные
+    и отдаёт результат.
+
+
+    Второй абзац задачи с подробностями.'
+  solution: 'Описание решения: архитектура, ключевые решения, что было сложно.'
+  result: 'Результат: сервис работает, покрыт тестами, развёрнут в Docker.'
+  images:
+  - src: tests/sample.png
+    caption: Главный экран
+  resume: true
+- slug: demo-ml
+  title: 'Тестовый проект: ML-модель'
+  year: 2025
+  kind: Хакатон
+  summary: Второй тестовый проект без скриншотов и без кейса.
+  stack:
+  - Python
+  - scikit-learn
+achievements:
+- date: Май 2026
+  title: Тестовый хакатон
+  result: 2 место
+  description: Описание участия.
+  url: https://example.com
+- date: Март 2026
+  title: Второй тестовый хакатон
+  result: Финалист
