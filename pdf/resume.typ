@@ -21,7 +21,7 @@
 }
 
 #let project(p) = block(below: 1.05em, breakable: false, {
-  link(site + "code/" + p.slug + "/", text(size: 10.4pt, weight: 600, fill: cobalt, p.title))
+  link(site + "code/" + p.slug + "/", text(size: 10.4pt, weight: 600, fill: accent, p.title))
   linebreak()
   event-line(p)
   v(-1pt)
@@ -65,6 +65,4 @@
 #v(1fr)
 #dots()
 #v(4pt)
-#align(center, text(size: 8.6pt, fill: muted)[
-  Подробно о каждом проекте: #link(site, site-short)
-])
+#align(center, contacts-line())

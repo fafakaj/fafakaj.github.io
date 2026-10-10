@@ -26,6 +26,7 @@ contacts:
   - label: GitHub
     value: fafakaj
     url: https://github.com/fafakaj
+    pdf: false  # только на сайте, в PDF не показывать
 
 # Карточка профиля во вкладке Feed: строки с иконками (имена иконок — static/icons/lucide).
 profile:

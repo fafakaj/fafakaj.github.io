@@ -1,17 +1,17 @@
 // Общие стили и блоки для резюме и полного портфолио.
-// Стиль: белый лист, кобальтовый акцент, точечные разделители, навыки чипами.
+// Стиль: белый лист, графитовый акцент, точечные разделители, навыки чипами.
 // Шрифты: Golos Text (текст) и JetBrains Mono (стек технологий).
 
-#let ink = rgb("#172033")
-#let body-col = rgb("#2e3749")
-#let muted = rgb("#6b7589")
-#let cobalt = rgb("#2953d6")
-#let chip-bg = rgb("#e7edfc")
-#let dot-col = rgb("#9fb2ef")
-#let tint = rgb("#f5f7fb")
+#let ink = rgb("#1c1f24")
+#let body-col = rgb("#33373d")
+#let muted = rgb("#71767e")
+#let accent = rgb("#4a4f57")
+#let chip-bg = rgb("#ebedf0")
+#let dot-col = rgb("#b3b8bf")
+#let tint = rgb("#f5f6f7")
 // Старые имена: portfolio.typ рисует ими рамку скриншота.
 #let line-col = dot-col
-#let link-col = cobalt
+#let link-col = accent
 
 #let data = yaml(sys.inputs.at("data", default: "/data/portfolio.yaml"))
 #let person = data.person
@@ -52,7 +52,7 @@
   set text(font: "Golos Text", size: 9.6pt, fill: body-col, lang: "ru", hyphenate: false)
   set par(leading: 0.62em, spacing: 0.85em)
   show strong: set text(weight: 600, fill: ink)
-  show link: set text(fill: cobalt)
+  show link: set text(fill: accent)
   show raw: set text(font: "JetBrains Mono")
   // Заголовок раздела: жирный текст и короткая точечная линия под ним.
   show heading.where(level: 1): it => block(above: 1.3em, below: 0.75em, sticky: true, {
@@ -61,7 +61,7 @@
     dots(thickness: 1.3pt, gap: 3.6pt)
   })
   show heading.where(level: 2): it => block(above: 1em, below: 0.45em, sticky: true,
-    text(size: 10pt, weight: 600, fill: cobalt, it.body))
+    text(size: 10pt, weight: 600, fill: accent, it.body))
   doc
 }
 
@@ -75,11 +75,15 @@
   items.map(chip).join(h(3pt))
 }
 
-// Шапка: круглое фото, имя, роль, контакты текстом (без иконок — их не читает ATS).
+// Контакты текстом (без иконок — их не читает ATS). Контакт с pdf: false в PDF не попадает.
+#let contacts-line() = {
+  let shown = data.contacts.filter(c => c.at("pdf", default: true))
+  text(size: 8.8pt, shown.map(c => [#text(fill: muted, c.label) #link(c.url, c.value)]).join(h(12pt)))
+}
+
+// Шапка: круглое фото, имя, роль. Контакты — внизу страницы (contacts-line).
 #let header() = {
   let photo = person.at("photo", default: none)
-  let contacts = data.contacts.map(c => [#text(fill: muted, c.label) #link(c.url, c.value)])
-  contacts.push([#text(fill: muted)[Сайт] #link(site, site-short)])
   grid(
     columns: if photo != none { (auto, 1fr) } else { (1fr,) },
     column-gutter: 16pt,
@@ -91,9 +95,7 @@
     {
       text(size: 22pt, weight: 700, fill: ink, person.name)
       v(1pt)
-      text(size: 10.5pt, weight: 500, fill: cobalt, person.role)
-      v(4pt)
-      text(size: 8.8pt, contacts.join(h(12pt)))
+      text(size: 10.5pt, weight: 500, fill: accent, person.role)
     },
   )
   fade-rule()
@@ -107,8 +109,8 @@
 #let entry(period, body) = block(
   stroke: (left: 1.4pt + dot-col), inset: (left: 10pt, y: 1pt), below: 0.9em, breakable: false,
   {
-    place(dx: -13.2pt, dy: 2.4pt, circle(radius: 2.6pt, fill: cobalt, stroke: 1pt + white))
-    text(size: 8.4pt, weight: 600, fill: cobalt, period)
+    place(dx: -13.2pt, dy: 2.4pt, circle(radius: 2.6pt, fill: accent, stroke: 1pt + white))
+    text(size: 8.4pt, weight: 600, fill: accent, period)
     linebreak()
     body
   },
@@ -167,7 +169,7 @@
       let name = if url != none { link(full-url(url), text(fill: ink, a.title)) } else { a.title }
       block(below: 0.7em, breakable: false, {
         text(weight: 600, fill: ink, name)
-        if a.at("result", default: none) != none { h(0.4em); text(fill: cobalt, weight: 600, a.result) }
+        if a.at("result", default: none) != none { h(0.4em); text(fill: accent, weight: 600, a.result) }
         linebreak()
         text(size: 8.4pt, fill: muted)[#a.date#if a.at("description", default: none) != none [. #a.description]]
       })

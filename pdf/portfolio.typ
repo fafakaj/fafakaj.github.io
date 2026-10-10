@@ -8,6 +8,10 @@
 #education()
 #achievements-section()
 #skills()
+#v(1fr)
+#dots()
+#v(4pt)
+#align(center, contacts-line())
 
 #let paragraphs(s) = s.trim().split("\n\n").map(t => par(t.trim())).join()
 
