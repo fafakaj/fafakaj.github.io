@@ -1,14 +1,17 @@
 // Общие стили и блоки для резюме и полного портфолио.
-// Стиль — как у сайта (образец simon.lecoq.io): тёмные плашки заголовков, бежево-серая палитра.
-// Фон страницы белый, чтобы PDF было удобно печатать.
+// Стиль: белый лист, кобальтовый акцент, точечные разделители, навыки чипами.
+// Шрифты: Golos Text (текст) и JetBrains Mono (стек технологий).
 
-#let ink = rgb("#4B4A3F")
-#let paper = rgb("#D7D2B8")
-#let muted = rgb("#7d7a68")
-#let faint = rgb("#a19c86")
-#let line-col = rgb("#B3AE99")
-#let link-col = rgb("#003A6B")
-#let venue = rgb("#4B4A3F")
+#let ink = rgb("#172033")
+#let body-col = rgb("#2e3749")
+#let muted = rgb("#6b7589")
+#let cobalt = rgb("#2953d6")
+#let chip-bg = rgb("#e7edfc")
+#let dot-col = rgb("#9fb2ef")
+#let tint = rgb("#f5f7fb")
+// Старые имена: portfolio.typ рисует ими рамку скриншота.
+#let line-col = dot-col
+#let link-col = cobalt
 
 #let data = yaml(sys.inputs.at("data", default: "/data/portfolio.yaml"))
 #let person = data.person
@@ -24,105 +27,135 @@
 // Ссылки сайта вида /code/x/ в PDF ведут на полный адрес.
 #let full-url(url) = if url.starts-with("/") { site.trim("/", at: end) + url } else { url }
 
+// Точечная линия — главный графический мотив.
+#let dots(color: dot-col, thickness: 1.7pt, gap: 4.6pt) = line(
+  length: 100%,
+  stroke: (paint: color, thickness: thickness, cap: "round", dash: (0pt, gap)),
+)
+
+#let fade-rule() = block(above: 1.1em, below: 1.2em, dots())
+
 #let setup(title: "", doc) = {
   set document(title: person.full_name + " — " + title, author: person.full_name)
   set page(
     paper: "a4",
-    margin: (x: 1.9cm, top: 1.4cm, bottom: 1.6cm),
+    margin: (x: 1.6cm, top: 1.4cm, bottom: 1.5cm),
     footer: context {
-      set text(size: 8pt, fill: faint)
+      set text(size: 7.6pt, fill: muted)
       person.full_name + " — " + title
       h(1fr)
       counter(page).display("1 из 1", both: true)
     },
   )
-  set text(font: "Roboto", size: 10pt, fill: ink, lang: "ru")
-  set par(leading: 0.55em, spacing: 0.85em)
-  show link: set text(fill: link-col)
-  // Заголовок раздела: тёмная плашка с квадратом, как шапка карточки на сайте.
-  show heading.where(level: 1): it => block(
-    above: 1.15em, below: 0.6em, width: 100%, fill: ink,
-    inset: (x: 8pt, top: 4pt, bottom: 5pt), sticky: true,
-    text(size: 11.5pt, weight: "regular", fill: paper)[■ #it.body])
+  // Без переносов: при переносе Typst сопоставляет глиф дефиса с U+00AD,
+  // и слова с дефисом («Веб-редактор») перестают находиться поиском и ATS.
+  set text(font: "Golos Text", size: 9.6pt, fill: body-col, lang: "ru", hyphenate: false)
+  set par(leading: 0.62em, spacing: 0.85em)
+  show strong: set text(weight: 600, fill: ink)
+  show link: set text(fill: cobalt)
+  show raw: set text(font: "JetBrains Mono")
+  // Заголовок раздела: жирный текст и короткая точечная линия под ним.
+  show heading.where(level: 1): it => block(above: 1.3em, below: 0.75em, sticky: true, {
+    text(size: 12pt, weight: 700, fill: ink, it.body)
+    v(-0.35em)
+    dots(thickness: 1.3pt, gap: 3.6pt)
+  })
   show heading.where(level: 2): it => block(above: 1em, below: 0.45em, sticky: true,
-    text(size: 10.5pt, weight: "bold", fill: ink)[■ #it.body])
+    text(size: 10pt, weight: 600, fill: cobalt, it.body))
   doc
 }
 
-// Разделитель, как под вкладками сайта: толстая линия и ряд точек.
-#let fade-rule() = block(above: 1em, below: 1em, width: 100%, {
-  line(length: 100%, stroke: 1.6pt + ink)
-  v(2.5pt)
-  box(width: 100%, height: 4pt, clip: true,
-    repeat(box(width: 14pt, align(left, circle(radius: 1.1pt, fill: ink)))))
-})
+#let chip(body) = box(
+  fill: chip-bg, inset: (x: 4.5pt), outset: (y: 3pt), radius: 2pt,
+  text(size: 8.2pt, fill: ink, body),
+)
 
-// Шапка: имя, курсивная фраза, контакты.
+#let chips(items) = {
+  set par(leading: 1.05em)
+  items.map(chip).join(h(3pt))
+}
+
+// Шапка: круглое фото, имя, роль, контакты текстом (без иконок — их не читает ATS).
 #let header() = {
-  let items = data.contacts.map(c => [#c.label: #link(c.url, c.value)])
-  items.push([Сайт: #link(site, site-short)])
-  align(center, stack(
-    spacing: 9pt,
-    text(size: 24pt, weight: "regular", fill: ink, person.full_name),
-    text(size: 11.5pt, style: "italic", fill: muted, person.tagline),
-    text(size: 9.5pt, items.join(h(0.5em) + text(fill: faint, "|") + h(0.5em))),
-  ))
+  let photo = person.at("photo", default: none)
+  let contacts = data.contacts.map(c => [#text(fill: muted, c.label) #link(c.url, c.value)])
+  contacts.push([#text(fill: muted)[Сайт] #link(site, site-short)])
+  grid(
+    columns: if photo != none { (auto, 1fr) } else { (1fr,) },
+    column-gutter: 16pt,
+    align: horizon,
+    ..if photo != none {
+      (box(width: 64pt, height: 64pt, radius: 32pt, clip: true, stroke: 1.5pt + chip-bg,
+        image("/" + photo, width: 64pt, height: 64pt, fit: "cover")),)
+    },
+    {
+      text(size: 22pt, weight: 700, fill: ink, person.name)
+      v(1pt)
+      text(size: 10.5pt, weight: 500, fill: cobalt, person.role)
+      v(4pt)
+      text(size: 8.8pt, contacts.join(h(12pt)))
+    },
+  )
   fade-rule()
 }
 
 #let about() = {
-  text(size: 10.5pt, person.about)
+  text(size: 10pt, fill: ink, person.about)
 }
 
-// Пункт шкалы: серый период слева, серая вертикальная линия, текст справа.
-#let entry(period, body) = grid(
-  columns: (2.6cm, 1fr),
-  column-gutter: 0pt,
-  align(right, pad(right: 7pt, text(size: 8.5pt, fill: faint, period))),
-  block(stroke: (left: 1.5pt + line-col), inset: (left: 10pt, bottom: 9pt), width: 100%, body),
+// Пункт шкалы: период сверху, кобальтовая точка на вертикальной линии.
+#let entry(period, body) = block(
+  stroke: (left: 1.4pt + dot-col), inset: (left: 10pt, y: 1pt), below: 0.9em, breakable: false,
+  {
+    place(dx: -13.2pt, dy: 2.4pt, circle(radius: 2.6pt, fill: cobalt, stroke: 1pt + white))
+    text(size: 8.4pt, weight: 600, fill: cobalt, period)
+    linebreak()
+    body
+  },
 )
 
 #let education() = [
   = Образование
   #for e in data.education {
     entry(e.period)[
-      #text(size: 11pt)[#link(e.url, e.university), #e.course] \
+      #text(weight: 600)[#link(e.url, text(fill: ink, e.university)), #e.course] \
       #e.faculty \
-      Направление «#e.direction», программа «#e.program», \
-      трек «#e.track»
+      #text(size: 8.8pt, fill: muted)[Направление «#e.direction», программа «#e.program», трек «#e.track»]
     ]
   }
 ]
 
+// Навыки: группа подписью, технологии чипами.
 #let skills() = [
   = Навыки
-  #grid(
-    columns: (auto, 1fr),
-    column-gutter: 1em,
-    row-gutter: 0.55em,
-    ..data.skills.map(s => (text(fill: muted, s.group + ":"), s.items.join(", "))).flatten(),
-  )
+  #for s in data.skills {
+    block(below: 1em, breakable: false, {
+      text(size: 8.4pt, weight: 600, fill: muted, s.group)
+      v(1pt)
+      chips(s.items)
+    })
+  }
 ]
 
 #let event-line(p) = {
   let ev = p.at("event", default: none)
-  if ev != none { text(size: 9pt, fill: venue, style: "italic", ev) }
+  if ev != none { text(size: 8.8pt, weight: 500, fill: ink, ev) }
 }
 
 #let stack-line(p) = {
   let st = p.at("stack", default: none)
-  if st != none { text(size: 9pt, fill: muted, st.join(", ")) }
+  if st != none { text(size: 7.8pt, fill: muted, raw(st.join(", "))) }
 }
 
 #let links-line(p) = {
   let links = p.at("links", default: none)
   if links != none and links.len() > 0 {
-    text(size: 9pt, links.map(l => link(full-url(l.url), l.label)).join(", "))
+    text(size: 8.8pt, links.map(l => link(full-url(l.url), l.label)).join(", "))
   }
 }
 
-// Достижения: левая серая полоса, название, зелёный результат — как .pub на сайте.
-// extra-only: только достижения без страницы проекта (для резюме, где результат уже под проектом).
+// Достижения: название, результат кобальтом, дата и описание мелко.
+// extra-only: только достижения без страницы проекта.
 #let achievements-section(extra-only: false, title: "Хакатоны и достижения") = {
   let shown = if extra-only {
     achievements.filter(a => not a.at("url", default: "").starts-with("/code/"))
@@ -131,19 +164,13 @@
     #heading(title)
     #for a in shown {
       let url = a.at("url", default: none)
-      let title = if url != none { link(full-url(url), a.title) } else { a.title }
-      block(
-        stroke: (left: 3pt + line-col),
-        inset: (left: 8pt, y: 2pt),
-        below: 0.65em,
-        breakable: false,
-        {
-          title
-          if a.at("result", default: none) != none { h(0.4em); text(fill: venue, weight: "bold", a.result) }
-          linebreak()
-          text(size: 9pt)[#a.date#if a.at("description", default: none) != none [. #a.description]]
-        },
-      )
+      let name = if url != none { link(full-url(url), text(fill: ink, a.title)) } else { a.title }
+      block(below: 0.7em, breakable: false, {
+        text(weight: 600, fill: ink, name)
+        if a.at("result", default: none) != none { h(0.4em); text(fill: cobalt, weight: 600, a.result) }
+        linebreak()
+        text(size: 8.4pt, fill: muted)[#a.date#if a.at("description", default: none) != none [. #a.description]]
+      })
     }
   ]
 }

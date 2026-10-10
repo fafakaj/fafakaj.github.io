@@ -25,9 +25,9 @@ python -m http.server -d dist     # просмотр: http://localhost:8000
 | `data/portfolio.yaml` | данные: профиль, лента (Feed), проекты (Code), достижения, навыки, контакты |
 | `templates/` | HTML-шаблоны Jinja2: `feed.html`, `code.html` (обзор и страница проекта), `resume.html`, `social.html`, `404.html` |
 | `static/` | CSS, JS (почта для спам-ботов скрыта ROT13), иконки, картинки, фон и узор разделителя |
-| `pdf/resume.typ` | резюме на одну страницу (проекты с `resume: true`) |
+| `pdf/resume.typ` | резюме на одну страницу: слева проекты (`resume: true`), справа образование и навыки |
 | `pdf/portfolio.typ` | полное портфолио: каждый проект — кейс со скриншотами |
-| `pdf/fonts/` | шрифт Roboto (SIL OFL 1.1) для PDF |
+| `pdf/fonts/` | шрифты Golos Text и JetBrains Mono (SIL OFL 1.1) для PDF |
 | `tests/fixture.yaml` | тестовые данные: проект без скриншота и без кода, профиль без фото |
 | `build.py` | сборка: YAML → `dist/` |
 
