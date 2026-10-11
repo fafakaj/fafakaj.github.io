@@ -1,19 +1,29 @@
 {% extends "base.html" %}
-{% block title %}Контакты — {{ person.name }}{% endblock %}
+{% block title %}Social — {{ person.name }}{% endblock %}
 {% block body %}
 <main class="container">
-  <h3 class="ctitle">контакты</h3>
+  <h2 class="ctitle">Social</h2>
   <ul class="contacts">
     {% for c in contacts %}
     {% set mail = c.url.startswith("mailto:") %}
-    <li>
-      <img src="{{ root }}static/icons/{{ 'email' if mail else c.label | lower }}.svg" class="iico" alt="">
-      <span class="clabel">{{ c.label }}</span>
+    <li class="contact">
       {% if mail %}
       {# Адрес лежит в ROT13 и собирается скриптом: так его не видят спам-боты. #}
-      <a class="cvalue" data-email="{{ c.value | rot13 }}" href="#">почта скрыта от спам-ботов, включите JavaScript</a>
+      <a class="crow" data-email="{{ c.value | rot13 }}" href="#">
+        <img src="{{ root }}static/icons/email.svg" class="iico" alt="">
+        <span class="clabel">{{ c.label }}</span>
+        <span class="cvalue">Turn on JavaScript to see the address</span>
+      </a>
+      <button type="button" class="btn btn-ghost copy" data-copy-email="{{ c.value | rot13 }}" aria-label="Copy email address" title="Copy email address">
+        <svg class="i-copy" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <svg class="i-done" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
       {% else %}
-      <a class="cvalue" href="{{ c.url }}">{{ c.value }}</a>
+      <a class="crow" href="{{ c.url }}">
+        <img src="{{ root }}static/icons/{{ c.label | lower }}.svg" class="iico" alt="">
+        <span class="clabel">{{ c.label }}</span>
+        <span class="cvalue">{{ c.value }}</span>
+      </a>
       {% endif %}
     </li>
     {% endfor %}

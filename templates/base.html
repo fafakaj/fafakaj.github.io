@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,24 +10,27 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="{{ site_url }}{{ path }}">
   {% if person.photo %}<meta property="og:image" content="{{ site_url }}{{ person.photo }}">{% endif %}
+  <meta name="theme-color" content="#faf7f0">
   <link rel="icon" href="{{ root }}static/favicon-32.png" type="image/png" sizes="32x32">
   <link rel="icon" href="{{ root }}static/logo.png" type="image/png" sizes="512x512">
   <link rel="apple-touch-icon" href="{{ root }}static/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="{{ root }}static/style.css">
 </head>
 <body>
 <header class="container topbar">
-  {% if tab != "home" %}<a href="{{ root }}" class="mininame">{{ person.name }}</a>{% endif %}
-  <nav class="tabs" aria-label="Разделы сайта">
+  <a href="{{ root }}" class="mininame"{% if tab == "home" %} aria-hidden="true" tabindex="-1"{% endif %}>{{ person.name }}</a>
+  <nav class="tabs" aria-label="Site sections">
     {% for t in tabs %}
     <a href="{{ root }}{{ t.href }}"{% if t.id == tab %} class="active"{% if path == t.href %} aria-current="page"{% endif %}{% endif %}>{{ t.label }}</a>
     {% endfor %}
   </nav>
 </header>
-<hr>
 {% block body %}{% endblock %}
 <footer class="container" id="footer">
-  {{ person.full_name }}. Обновлено {{ updated }}.
+  {{ person.full_name }}. Updated {{ updated }}.
 </footer>
 <script src="{{ root }}static/site.js" defer></script>
 </body>

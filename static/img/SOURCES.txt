@@ -1,2 +1,7 @@
 itmo-logo.png — логотип Университета ИТМО, Wikimedia Commons «Itmo small white rus.jpg» (public domain), обрезан в квадрат.
 avatar.jpg — аватар GitHub-профиля fafakaj.
+hack-pochtatech.png — значок Почты России, www.pochta.ru/apple-touch-icon.png (хакатон Почтатеха).
+hack-rlt.png — обложка Университета Росэлторг, uni.roseltorg.ru/social-preview.png (RLT.Hack).
+hack-cosmo.png — знак КосмоХакатона, космохакатон.рф/assets/logo-mark.png, дополнен полями до квадрата.
+hack-neftekod.svg — логотип «Газпром нефти» (организатор «Нефтекода»), www.gazprom-neft.ru, обрезан до знака и названия.
+hack-tender.svg — логотип Tender Hack из шапки tenderhack.ru.

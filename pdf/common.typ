@@ -24,7 +24,7 @@
 #let projects = list-or-empty("projects")
 #let achievements = list-or-empty("achievements")
 
-// Ссылки сайта вида /code/x/ в PDF ведут на полный адрес.
+// Ссылки сайта вида /projects/x/ в PDF ведут на полный адрес.
 #let full-url(url) = if url.starts-with("/") { site.trim("/", at: end) + url } else { url }
 
 // Точечная линия — главный графический мотив.
@@ -44,12 +44,12 @@
       set text(size: 7.6pt, fill: muted)
       person.full_name + " — " + title
       h(1fr)
-      counter(page).display("1 из 1", both: true)
+      counter(page).display("1 / 1", both: true)
     },
   )
   // Без переносов: при переносе Typst сопоставляет глиф дефиса с U+00AD,
   // и слова с дефисом («Веб-редактор») перестают находиться поиском и ATS.
-  set text(font: "Golos Text", size: 9.6pt, fill: body-col, lang: "ru", hyphenate: false)
+  set text(font: "Golos Text", size: 9.6pt, fill: body-col, lang: "en", hyphenate: false)
   set par(leading: 0.62em, spacing: 0.85em)
   show strong: set text(weight: 600, fill: ink)
   show link: set text(fill: accent)
@@ -117,19 +117,19 @@
 )
 
 #let education() = [
-  = Образование
+  = Education
   #for e in data.education {
     entry(e.period)[
       #text(weight: 600)[#link(e.url, text(fill: ink, e.university)), #e.course] \
       #e.faculty \
-      #text(size: 8.8pt, fill: muted)[Направление «#e.direction», программа «#e.program», трек «#e.track»]
+      #text(size: 8.8pt, fill: muted, e.direction + "; " + e.program + " program; " + e.track + " track")
     ]
   }
 ]
 
 // Навыки: группа подписью, технологии чипами.
 #let skills() = [
-  = Навыки
+  = Skills
   #for s in data.skills {
     block(below: 1em, breakable: false, {
       text(size: 8.4pt, weight: 600, fill: muted, s.group)
@@ -158,9 +158,9 @@
 
 // Достижения: название, результат кобальтом, дата и описание мелко.
 // extra-only: только достижения без страницы проекта.
-#let achievements-section(extra-only: false, title: "Хакатоны и достижения") = {
+#let achievements-section(extra-only: false, title: "Hackathons and achievements") = {
   let shown = if extra-only {
-    achievements.filter(a => not a.at("url", default: "").starts-with("/code/"))
+    achievements.filter(a => not a.at("url", default: "").starts-with("/projects/"))
   } else { achievements }
   if shown.len() > 0 [
     #heading(title)

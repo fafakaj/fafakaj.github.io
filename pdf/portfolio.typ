@@ -1,7 +1,7 @@
 // Полное портфолио: обзор + каждый проект кейсом (задача, решение, результат, скриншоты).
 #import "common.typ": *
 
-#show: setup.with(title: "портфолио")
+#show: setup.with(title: "Portfolio")
 
 #header()
 #about()
@@ -17,10 +17,10 @@
 
 #if projects.len() > 0 {
   for (i, p) in projects.enumerate() {
-    if i == 0 { pagebreak(weak: true); [= Проекты] } else { fade-rule() }
+    if i == 0 { pagebreak(weak: true); [= Projects] } else { fade-rule() }
     block(breakable: false, width: 100%, {
       block(below: 0.7em, sticky: true, {
-        text(size: 17pt, weight: 700, link(site + "code/" + p.slug + "/", text(fill: ink, p.title)))
+        text(size: 17pt, weight: 700, link(site + "projects/" + p.slug + "/", text(fill: ink, p.title)))
         linebreak()
         event-line(p)
       })
@@ -28,7 +28,7 @@
       v(0.2em)
       stack-line(p)
       if p.at("links", default: none) != none { linebreak(); links-line(p) }
-      for (key, heading) in (("task", "Задача"), ("solution", "Решение"), ("result", "Результат")) {
+      for (key, heading) in (("task", "Task"), ("solution", "Solution"), ("result", "Result")) {
         let body = p.at(key, default: none)
         if body != none [
           == #heading
@@ -37,7 +37,7 @@
       }
       let images = p.at("images", default: none)
       if images != none and images.len() > 0 [
-        == Скриншоты
+        == Screenshots
         #for img in images {
           figure(
             box(stroke: 0.5pt + line-col, radius: 3pt, clip: true, image("/" + img.src, width: 100%)),

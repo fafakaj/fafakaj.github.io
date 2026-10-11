@@ -1,43 +1,39 @@
 {% extends "base.html" %}
-{% block title %}Проекты — {{ person.name }}{% endblock %}
+{% block title %}Projects — {{ person.name }}{% endblock %}
 {% block body %}
-<main>
+<main class="container">
   {% if projects %}
-  <section id="projects" class="container">
-    <h3 class="ctitle">проекты</h3>
-    {% for p in projects %}
-    <div class="project">
-      <div class="pico"><a href="{{ root }}projects/{{ p.slug }}/" tabindex="-1" aria-hidden="true">{% if p.thumb %}<img src="{{ root }}{{ p.thumb }}" alt="">{% else %}<span class="pico-text">{{ (p.event or p.title).split(",")[0] }}</span>{% endif %}</a></div>
-      <div class="pdesc">
-        <a href="{{ root }}projects/{{ p.slug }}/">{{ p.title }}</a> — {{ p.summary }}
-        {% if p.event %}<span class="pevent">{{ p.event }}</span>{% endif %}
-        {% if p.stack %}<span class="pstack">{{ p.stack | join(", ") }}</span>{% endif %}
-      </div>
-      <div class="pend"></div>
-    </div>
-    {% endfor %}
+  <section aria-labelledby="p-title">
+    <h2 class="ctitle" id="p-title">Projects</h2>
+    <ul class="plist">
+      {% for p in projects %}
+      <li class="project">
+        <a class="pcard" href="{{ root }}projects/{{ p.slug }}/">
+          <span class="pico">{% if p.thumb %}<img src="{{ root }}{{ p.thumb }}" alt="" loading="lazy">{% else %}<span class="pico-text">{{ (p.event or p.title).split(",")[0] }}</span>{% endif %}</span>
+          <span class="pdesc">
+            <span class="ptitle">{{ p.title }}</span>
+            <span class="psum">{{ p.summary }}</span>
+            {% if p.event %}<span class="pevent">{{ p.event }}</span>{% endif %}
+            {% if p.stack %}<span class="pstack">{{ p.stack | join(", ") }}</span>{% endif %}
+          </span>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
   </section>
   {% endif %}
 
   {% if skills %}
-  <section id="skills" class="container">
-    <h3 class="ctitle">стек технологий</h3>
-    {% for s in skills %}
-    <p class="skill"><span class="skill-group">{{ s.group }}:</span> {{ s["items"] | join(", ") }}</p>
-    {% endfor %}
-  </section>
-  {% endif %}
-
-  {% if achievements %}
-  <section id="achievements" class="container">
-    <h3 class="ctitle">хакатоны и достижения</h3>
-    {% for a in achievements %}
-    <div class="pub">
-      <div class="pub-title">{% if a.url %}<a href="{{ a.url }}">{{ a.title }}</a>{% else %}{{ a.title }}{% endif %}</div>
-      {% if a.result %}<div class="pub-venue">{{ a.result }}</div>{% endif %}
-      <div class="pub-authors">{{ a.date }}{% if a.description %}. {{ a.description }}{% endif %}</div>
-    </div>
-    {% endfor %}
+  <section aria-labelledby="s-title">
+    <h2 class="ctitle" id="s-title">Tech stack</h2>
+    <dl class="skills">
+      {% for s in skills %}
+      <div class="skill">
+        <dt>{{ s.group }}</dt>
+        <dd>{% for i in s["items"] %}<span class="chip">{{ i }}</span>{% endfor %}</dd>
+      </div>
+      {% endfor %}
+    </dl>
   </section>
   {% endif %}
 </main>

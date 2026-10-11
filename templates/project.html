@@ -4,30 +4,29 @@
 {% block body %}
 <main class="container">
   <article class="case">
+    <a href="{{ root }}projects/" class="btn btn-ghost back">← All projects</a>
     <h1>{{ p.title }}</h1>
-    <h2>{{ p.event or p.year }}</h2>
+    {% if p.event or p.year %}<p class="role">{{ p.event or p.year }}</p>{% endif %}
     <p class="lead">{{ p.summary }}</p>
-    {% if p.stack %}<p><b>Стек:</b> {{ p.stack | join(", ") }}</p>{% endif %}
-    {% if p.links %}<p><b>Ссылки:</b> {% for l in p.links %}<a href="{{ l.url }}">{{ l.label }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</p>{% endif %}
+    {% if p.stack %}<p class="chips">{% for i in p.stack %}<span class="chip">{{ i }}</span>{% endfor %}</p>{% endif %}
+    {% if p.links %}<p class="links">{% for l in p.links %}<a href="{{ l.url }}" class="btn">{{ l.label }}</a>{% endfor %}</p>{% endif %}
 
-    {% for key, heading in [("task", "задача"), ("solution", "решение"), ("result", "результат")] %}
+    {% for key, heading in [("task", "Task"), ("solution", "Solution"), ("result", "Result")] %}
     {% if p[key] %}
-    <h3 class="ctitle">{{ heading }}</h3>
+    <h2 class="ctitle">{{ heading }}</h2>
     {% for para in p[key].split("\n\n") %}<p>{{ para }}</p>{% endfor %}
     {% endif %}
     {% endfor %}
 
     {% if p.images %}
-    <h3 class="ctitle">скриншоты</h3>
+    <h2 class="ctitle">Screenshots</h2>
     {% for img in p.images %}
-    <figure>
+    <figure class="shot">
       <img src="{{ root }}{{ img.src }}" alt="{{ img.caption or p.title }}" loading="lazy">
       {% if img.caption %}<figcaption>{{ img.caption }}</figcaption>{% endif %}
     </figure>
     {% endfor %}
     {% endif %}
-
-    <p class="back"><a href="{{ root }}projects/">← все проекты</a></p>
   </article>
 </main>
 {% endblock %}

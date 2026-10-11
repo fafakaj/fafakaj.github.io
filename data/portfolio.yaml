@@ -1,26 +1,27 @@
 # Единый источник данных: из него собираются сайт (build.py) и оба PDF (pdf/*.typ).
 # Пустой список (projects: [] или achievements: []) скрывает раздел на сайте и в PDF.
+# Язык сайта и PDF — английский.
 
 site_url: https://fafakaj.github.io/
 
 person:
-  name: Александр Лесницкий
-  full_name: Лесницкий Александр Маркович
-  role: Студент 2 курса, инженерия ИИ
+  name: Alexander Lesnitsky
+  full_name: Alexander Lesnitsky
+  role: 2nd-year student, AI Engineering track
   # Подпись под именем на главной странице сайта.
-  title: ML/DS инженер
+  title: ML/DS Engineer
   # Круглое фото в шапке: положите файл в static/img/ и укажите путь. Пусто — без фото.
   photo: static/img/avatar.jpg
   about: >-
-    Студент 2 курса Университета ИТМО, трек «Инженерия искусственного интеллекта».
-    Пишу на Python, работаю с данными и моделями машинного обучения.
-    За 2026 год — пять командных хакатонов, три финала.
+    Second-year student at ITMO University, AI Engineering track.
+    I write Python and work with data and machine learning models.
+    Five team hackathons in 2026, three of them finals.
 
 contacts:
   - label: Telegram
     value: "@yvldxe"
     url: https://t.me/yvldxe
-  - label: Почта
+  - label: Email
     value: amlesnitsky@gmail.com
     url: mailto:amlesnitsky@gmail.com
   - label: GitHub
@@ -29,30 +30,35 @@ contacts:
     pdf: false  # только на сайте, в PDF не показывать
 
 education:
-  - period: 2025 — н. в.
-    university: Университет ИТМО
+  - period: 2025 – present
+    university: ITMO University
     url: https://itmo.ru
-    course: 2 курс
-    faculty: Программная инженерия и компьютерные технологии (ПИиКТ)
-    direction: Программная инженерия
-    program: Нейротехнологии и программирование
-    track: Инженерия искусственного интеллекта
+    course: 2nd year
+    faculty: Faculty of Software Engineering and Computer Systems
+    direction: Software Engineering
+    program: Neurotechnology and Programming
+    track: Artificial Intelligence Engineering
+    # Запись во временной шкале на главной (внизу шкалы).
+    timeline_date: Sep 2025
+    timeline_title: Started at ITMO University
+    timeline_text: Software Engineering, Neurotechnology and Programming program, AI Engineering track.
+    logo: static/img/itmo-logo.png
 
 skills:
-  - group: Языки
+  - group: Languages
     items: [Python, SQL, JavaScript]
-  - group: Анализ данных
+  - group: Data analysis
     items: [pandas, NumPy, Matplotlib, Seaborn, Jupyter, EDA]
-  - group: Машинное обучение
-    items: [scikit-learn, LightGBM, PyTorch, валидация и метрики моделей]
-  - group: Бэкенд и данные
+  - group: Machine learning
+    items: [scikit-learn, LightGBM, PyTorch, model validation and metrics]
+  - group: Backend and data
     items: [FastAPI, REST API, PostgreSQL]
-  - group: Инструменты
+  - group: Tools
     items: [Git, Docker, Linux, pytest]
 
 # Проект. Поля:
 #   slug       — адрес страницы: /projects/<slug>/
-#   title, year, kind (например «Хакатон»), event — название хакатона, даты, результат
+#   title, year, kind (например Hackathon), event — название хакатона, даты, результат
 #   summary    — одна-две фразы для списка проектов и резюме
 #   stack      — список технологий
 #   links      — список {label, url}
@@ -62,162 +68,175 @@ skills:
 #   resume     — true: проект попадает в короткое резюме
 projects:
   - slug: post-digital-twin
-    title: Цифровой двойник отделения Почты России
+    title: Digital twin of a Russian Post office
     year: 2026
-    kind: Хакатон
-    event: Хакатон Почтатеха, 17 сентября — 8 октября 2026, финал, 5 место
+    kind: Hackathon
+    event: Pochtatech Hackathon, September 17 – October 8, 2026, final, 5th place
     summary: >-
-      Веб-редактор плана почтового отделения в 2D и 3D: инвентаризация оборудования,
-      автоматические проверки и объяснимые рекомендации по планировке.
+      A 2D and 3D web editor for a post office floor plan: equipment inventory,
+      automatic checks and explainable layout recommendations.
     stack: [TypeScript, React, Konva, Three.js, Fastify, Zod, Vitest, Playwright, Docker]
     task: >-
-      Сделать цифровой двойник почтового отделения: план помещения с зонами и
-      оборудованием, по которому можно провести инвентаризацию, найти нарушения
-      и получить рекомендации по расстановке.
+      Build a digital twin of a post office: a floor plan with zones and
+      equipment that supports an inventory check, finds violations
+      and gives recommendations on the layout.
     solution: |-
-      Редактор синтетического плана отделения с библиотекой оборудования, зонами и перегородками. Инвентаризация, 3D-вид и рекомендации работают на одной модели плана. Геометрию и площади считает код, а ассистент на LLM (Qwen, DeepSeek) объясняет результаты. Без ключа API ассистент считает сам.
+      An editor for a synthetic office plan with an equipment library, zones and partitions. The inventory, the 3D view and the recommendations all use one plan model. Code calculates geometry and areas, and an LLM assistant (Qwen, DeepSeek) explains the results. Without an API key, the assistant works on rules alone.
 
-      Справочник оборудования расширяется прямо в редакторе. Планы сохраняются в файл и открываются заново.
+      Users can extend the equipment catalog directly in the editor. Plans are saved to a file and can be opened again.
     result: >-
-      Финал хакатона, 5 место. Сервис развёрнут в Yandex Cloud, сценарий проверки
-      покрыт браузерными тестами Playwright.
+      Hackathon final, 5th place. The service runs in Yandex Cloud, and the
+      check scenario is covered by Playwright browser tests.
     thumb: static/img/pochta-thumb.jpg
     images:
       - src: static/img/pochta.jpg
-        caption: План демо-отделения с зонами, оборудованием и инвентаризацией
+        caption: Demo office plan with zones, equipment and inventory
     resume: true
 
   - slug: rlt-suppliers
-    title: Подбор поставщиков для госзакупок
+    title: Supplier matching for public procurement
     year: 2026
-    kind: Хакатон
-    event: RLT.Hack (Росэлторг), 1–2 октября 2026, финал, 5 место
+    kind: Hackathon
+    event: RLT.Hack (Roseltorg), October 1–2, 2026, final, 5th place
     summary: >-
-      Сервис подбирает поставщиков, производителей и дистрибьюторов под закупку
-      заказчика и объясняет каждую рекомендацию с источником факта.
+      The service finds suppliers, manufacturers and distributors for a customer's
+      purchase and explains each recommendation with the source of every fact.
     stack: [Python, FastAPI, DuckDB, LightGBM, BM25, sentence-transformers, PostgreSQL, React, Docker]
     task: >-
-      Для АИС госзакупок и Электронного магазина Санкт-Петербурга найти
-      поставщиков под потребность заказчика: и тех, кто уже участвовал
-      в госзакупках, и новых компаний из открытых источников.
+      For the Saint Petersburg public procurement system and its e-shop, find
+      suppliers for a customer's need: both companies with public procurement
+      experience and new companies from open sources.
     solution: >-
-      Поиск по истории лотов (BM25 и эмбеддинги) и ранжирование LightGBM.
-      Выдача разделена на два блока: «С опытом госзакупок» и «Новые из открытых
-      источников». Карточки компаний обогащаются из открытых реестров ФНС,
-      реестра МСП, ГИСП и реестра недобросовестных поставщиков. У каждого факта
-      есть источник и дата.
+      Search over lot history (BM25 and embeddings) with LightGBM ranking.
+      Results come in two blocks: "With procurement experience" and "New from
+      open sources". Company cards are enriched from open registries: the Federal
+      Tax Service, the SME registry, GISP and the registry of unreliable suppliers.
+      Every fact has a source and a date.
     result: >-
-      Финал хакатона, 5 место. На 604 452 лотах 2024–2025 годов победитель лота
-      попадает в топ-10 выдачи в 55,7 % случаев (dev-выборка).
+      Hackathon final, 5th place. On 604,452 lots from 2024–2025, the lot winner
+      is in the top 10 results in 55.7% of cases (dev set).
     thumb: static/img/rlt-thumb.jpg
     images:
       - src: static/img/rlt.jpg
-        caption: Карточка поставщика с ролью, историей закупок и соответствием товару
+        caption: Supplier card with role, procurement history and product match
     resume: true
 
   - slug: floodvalue
-    title: FloodValue — карта затоплений по радарным снимкам
+    title: FloodValue — flood maps from radar imagery
     year: 2026
-    kind: Хакатон
-    event: Космохакатон 2026, 25–27 сентября, финал, 3 место
+    kind: Hackathon
+    event: Cosmohackathon 2026, September 25–27, final, 3rd place
     summary: >-
-      По радарным снимкам Sentinel-1 модель строит вероятностную карту воды,
-      оценивает ожидаемый ущерб объектам и планирует дополнительную съёмку в рамках бюджета.
+      A model builds a probabilistic water map from Sentinel-1 radar images,
+      estimates expected damage to assets and plans extra imaging within a budget.
     stack: [Python, PyTorch, U-Net, scikit-learn, rasterio, FastAPI, React, MapLibre]
     task: >-
-      Помочь инфраструктурному оператору при наводнении: понять, где вода,
-      какой ущерб ожидается у объектов и какую дополнительную спутниковую съёмку
-      заказать при ограниченном бюджете.
+      Help an infrastructure operator during a flood: find where the water is,
+      estimate the expected damage to assets and choose which extra satellite
+      images to order with a limited budget.
     solution: >-
-      Компактная U-Net (ансамбль из 5 моделей) сегментирует воду на снимках
-      Sentinel-1 из открытого датасета Sen1Floods11. Вероятности откалиброваны
-      методом Платта. По карте воды считается ожидаемый ущерб 10 объектов, а три
-      стратегии выбирают дополнительную съёмку в пределах бюджета. Результат
-      показан на интерактивной карте.
+      A compact U-Net (an ensemble of 5 models) segments water on Sentinel-1
+      images from the open Sen1Floods11 dataset. Probabilities are calibrated
+      with Platt scaling. The water map gives the expected damage for 10 assets,
+      and three strategies choose extra imaging within the budget. The result
+      is shown on an interactive map.
     result: >-
-      Финал хакатона, 3 место. На отложенной тестовой выборке IoU модели 0,725
-      против 0,677 у порогового бейзлайна.
+      Hackathon final, 3rd place. On a held-out test set, the model reaches
+      IoU 0.725 against 0.677 for a threshold baseline.
     thumb: static/img/kosmo-thumb.jpg
     images:
       - src: static/img/kosmo.jpg
-        caption: Интерфейс с наблюдениями на карте мира
+        caption: Interface with observations on the world map
     resume: true
 
   - slug: neftekod
-    title: Рекомендации оператору установки гидроочистки
+    title: Recommendations for a hydrotreating unit operator
     year: 2026
-    kind: Хакатон
-    event: Нефтекод 2.0, 8–22 сентября 2026
+    kind: Hackathon
+    event: Neftekod 2.0, September 8–22, 2026
     summary: >-
-      Мультиагентная система по данным установки прогнозирует качество дизельного
-      топлива и выдаёт оператору проверенную рекомендацию или обоснованный отказ.
+      A multi-agent system uses unit data to forecast diesel fuel quality and gives
+      the operator a verified recommendation or a reasoned refusal.
     stack: [Python, pandas, NumPy, pytest]
     task: >-
-      По телеметрии установки и лабораторным анализам оценить качество товарного
-      дизельного топлива (сера, T95, цетановое число, плотность) и предложить
-      оператору безопасное управляющее воздействие.
+      Use unit telemetry and lab analyses to estimate the quality of commercial
+      diesel fuel (sulfur, T95, cetane number, density) and suggest a safe
+      control action to the operator.
     solution: >-
-      Четыре детерминированных агента без LLM: качество, надёжность, оптимизация
-      и оркестратор, который заново проверяет каждую рекомендацию по независимым
-      источникам. Прогноз серы проверен бэктестом на истории. Если данных
-      не хватает, система отказывается и объясняет причину.
+      Four deterministic agents without an LLM: quality, reliability, optimization
+      and an orchestrator that re-checks every recommendation against independent
+      sources. The sulfur forecast is validated with a backtest on history. When
+      data is missing, the system refuses and explains why.
     result: >-
-      Рекомендация выдаётся карточкой по семи блокам ТЗ и в JSON. Прогон
-      детерминирован, проект покрыт 346 тестами.
+      The recommendation comes as a card with the seven blocks from the brief and as
+      JSON. Runs are deterministic, and the project has 346 tests.
     resume: true
 
   - slug: tender-hack
-    title: Агрегатор цен с маркетплейсов
+    title: Marketplace price aggregator
     year: 2026
-    kind: Хакатон
-    event: Tender Hack, 22–25 мая 2026
+    kind: Hackathon
+    event: Tender Hack, May 22–25, 2026
     summary: >-
-      Сервис параллельно ищет цены на товар в Wildberries, Ozon, Яндекс Маркете
-      и открытых источниках и сводит результаты в одну выдачу.
+      The service searches for product prices on Wildberries, Ozon, Yandex Market
+      and open sources in parallel and merges the results into one list.
     stack: [Python, FastAPI, Playwright, Redis, SearXNG, sentence-transformers, React, Docker]
     links:
       - label: GitHub
         url: https://github.com/IR630/tender_hack
     task: >-
-      Быстро собрать актуальные цены на товар из нескольких маркетплейсов
-      и открытых источников для обоснования цены закупки.
+      Quickly collect current product prices from several marketplaces
+      and open sources to justify a purchase price.
     solution: >-
-      FastAPI опрашивает источники параллельно: Wildberries, Ozon, Яндекс Маркет
-      и четвёртый источник через метапоиск SearXNG. Для сайтов с защитой
-      используется браузер Playwright, результаты кешируются в Redis.
-      Похожие товары сопоставляются эмбеддингами rubert-tiny2.
+      FastAPI queries the sources in parallel: Wildberries, Ozon, Yandex Market
+      and a fourth source through the SearXNG metasearch engine. Protected sites
+      are opened with a Playwright browser, and results are cached in Redis.
+      Similar products are matched with rubert-tiny2 embeddings.
     result: >-
-      Рабочий прототип с React-интерфейсом и запуском через Docker.
+      A working prototype with a React interface that runs in Docker.
     resume: true
 
-# Хакатоны и достижения. Поля: date, title, result, description, url (необязательно).
+# Хакатоны и достижения: временная шкала на главной, сверху — самое новое.
+# Поля: date, title, result, description, url (необязательно).
+# final: true — результат выделяется цветом. logo — картинка в static/img/
+# (источники — static/img/SOURCES.txt); без logo рисуется плашка с текстом logo_text.
 achievements:
-  - date: Сентябрь — октябрь 2026
-    title: Хакатон Почтатеха
-    result: финал, 5 место
-    description: Цифровой двойник отделения Почты России.
+  - date: Sep – Oct 2026
+    title: Pochtatech Hackathon
+    logo: static/img/hack-pochtatech.png
+    result: Final, 5th place
+    final: true
+    description: Digital twin of a Russian Post office.
     url: /projects/post-digital-twin/
-  - date: Октябрь 2026
-    title: RLT.Hack (Росэлторг)
-    result: финал, 5 место
-    description: Подбор поставщиков для госзакупок.
+  - date: Oct 2026
+    title: RLT.Hack (Roseltorg)
+    logo: static/img/hack-rlt.png
+    result: Final, 5th place
+    final: true
+    description: Supplier matching for public procurement.
     url: /projects/rlt-suppliers/
-  - date: Сентябрь 2026
-    title: Космохакатон 2026
-    result: финал, 3 место
-    description: FloodValue — карта затоплений по радарным снимкам.
+  - date: Sep 2026
+    title: Cosmohackathon 2026
+    logo: static/img/hack-cosmo.png
+    result: Final, 3rd place
+    final: true
+    description: FloodValue — flood maps from radar imagery.
     url: /projects/floodvalue/
-  - date: Сентябрь 2026
-    title: Нефтекод 2.0
-    result: участие
-    description: Рекомендации оператору установки гидроочистки.
+  - date: Sep 2026
+    title: Neftekod 2.0
+    logo: static/img/hack-neftekod.svg
+    result: Participant
+    description: Recommendations for a hydrotreating unit operator.
     url: /projects/neftekod/
-  - date: Май 2026
+  - date: May 2026
     title: Tender Hack
-    result: участие
-    description: Агрегатор цен с маркетплейсов.
+    logo: static/img/hack-tender.svg
+    result: Participant
+    description: Marketplace price aggregator.
     url: /projects/tender-hack/
-  - date: Октябрь 2025
-    title: Внутренний хакатон по Data Science
-    result: 3 место
-    description: Разведочный анализ данных (EDA).
+  - date: Oct 2025
+    title: Internal Data Science hackathon
+    logo_text: DS
+    result: 3rd place
+    final: true
+    description: Exploratory data analysis (EDA).

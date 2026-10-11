@@ -21,16 +21,16 @@ PDF = {"resume": "Lesnitsky_Resume.pdf", "portfolio": "Lesnitsky_Portfolio.pdf"}
 
 # Вкладки сверху на каждой странице.
 TABS = [
-    {"id": "home", "label": "главная", "href": ""},
-    {"id": "projects", "label": "проекты", "href": "projects/"},
-    {"id": "social", "label": "контакты", "href": "social/"},
-    {"id": "resume", "label": "резюме", "href": "resume/"},
+    {"id": "home", "label": "Home", "href": ""},
+    {"id": "projects", "label": "Projects", "href": "projects/"},
+    {"id": "social", "label": "Social", "href": "social/"},
+    {"id": "resume", "label": "Resume", "href": "resume/"},
 ]
 
 # Файлы на вкладке «резюме»: превью — первая страница PDF в PNG.
 DOCS = [
-    {"id": "resume", "label": "резюме", "note": "PDF, 1 страница"},
-    {"id": "portfolio", "label": "полное портфолио", "note": "PDF, все проекты со скриншотами"},
+    {"id": "resume", "label": "Resume", "note": "One page: projects, education, skills"},
+    {"id": "portfolio", "label": "Full portfolio", "note": "Every project as a case study"},
 ]
 
 
@@ -70,13 +70,20 @@ def build_site(data: dict, out: Path) -> None:
         preview = f"{d['id']}-preview.png"
         docs.append({**d, "file": PDF[d["id"]],
                      "preview": preview if (out / "pdf" / preview).exists() else None})
+    # Временная шкала на главной: хакатоны, затем учёба (у кого есть timeline_title).
+    timeline = [*data["achievements"], *(
+        {"date": e["timeline_date"], "title": e["timeline_title"], "description": e.get("timeline_text"),
+         "url": e.get("url"), "logo": e.get("logo")}
+        for e in data.get("education") or [] if e.get("timeline_title")
+    )]
     common = {
         **data,
+        "timeline": timeline,
         "tabs": TABS,
         "docs": docs,
         "pdf": PDF,
         "root": "/",
-        "updated": dt.date.today().strftime("%d.%m.%Y"),
+        "updated": f"{dt.date.today():%B} {dt.date.today().day}, {dt.date.today().year}",
     }
 
     def render(template: str, target: str, **extra) -> None:
