@@ -28,51 +28,25 @@ contacts:
     url: https://github.com/fafakaj
     pdf: false  # только на сайте, в PDF не показывать
 
-# Карточка профиля во вкладке Feed: строки с иконками (имена иконок — static/icons/lucide).
-profile:
-  handle: "@yvldxe / fafakaj"
-  facts:
-    - icon: building-2
-      text: Университет ИТМО
-    - icon: graduation-cap
-      text: ПИиКТ, 2 курс
-    - icon: brain
-      text: Трек «Инженерия ИИ»
-    - icon: trophy
-      text: 3 финала хакатонов в 2026
-
-# Лента (вкладка Feed) — временная шкала, сверху самое новое.
-#   date    — ГГГГ-ММ-ДД или ГГГГ-ММ (тогда без дня)
-#   title   — заголовок записи
-#   project — slug проекта: запись покажет его описание, превью и ссылку
-#   text    — свой текст; ссылки: [текст](url)
-feed:
-  - date: 2026-10-08
-    title: Хакатон Почтатеха — финал, 5 место
-    project: post-digital-twin
-  - date: 2026-10-02
-    title: RLT.Hack (Росэлторг) — финал, 5 место
-    project: rlt-suppliers
-  - date: 2026-09-27
-    title: Космохакатон 2026 — финал, 3 место
-    project: floodvalue
-  - date: 2026-09-22
-    title: Нефтекод 2.0
-    project: neftekod
-  - date: 2026-05-25
-    title: Tender Hack
-    project: tender-hack
-  - date: 2025-10
-    title: Внутренний хакатон по Data Science — 3 место
+# Временная шкала на сайте, сверху — самое новое.
+# text поддерживает ссылки: [текст](https://...). logo — картинка в static/img/ (квадрат);
+# без logo рисуется плашка с текстом logo_text.
+timeline:
+  - period: 2026
+    logo_text: Хакатоны
     text: >-
-      Первый хакатон: разведочный анализ данных (EDA) и выводы по датасету.
-  - date: 2025-09
-    title: Университет ИТМО
+      Пять командных хакатонов за год, три из них — финал:
+      [Космохакатон](/projects/floodvalue/) (3 место),
+      [RLT.Hack от Росэлторга](/projects/rlt-suppliers/) (5 место)
+      и [хакатон Почтатеха](/projects/post-digital-twin/) (5 место).
+      Проекты и результаты — ниже.
+  - period: 2025 —
+    logo: static/img/itmo-logo.png
+    logo_text: ИТМО
     text: >-
-      Поступил в [Университет ИТМО](https://itmo.ru) на факультет ПИиКТ,
+      Учусь на 2 курсе [Университета ИТМО](https://itmo.ru), факультет ПИиКТ,
       направление «Программная инженерия». Программа «Нейротехнологии
       и программирование», трек «Инженерия искусственного интеллекта».
-    image: static/img/itmo-logo.png
 
 education:
   - period: 2025 — н. в.
@@ -97,15 +71,13 @@ skills:
     items: [Git, Docker, Linux, pytest]
 
 # Проект. Поля:
-#   slug       — адрес страницы: /code/<slug>/
+#   slug       — адрес страницы: /projects/<slug>/
 #   title, year, kind (например «Хакатон»), event — название хакатона, даты, результат
 #   summary    — одна-две фразы для главной и резюме
 #   stack      — список технологий
 #   links      — список {label, url}
 #   task, solution, result — кейс для страницы проекта и полного PDF
-#   date       — дата окончания (ГГГГ-ММ-ДД), featured — показывать в «Финалах»
-#   thumb      — маленькое превью (static/img/<файл>)
-#   snippet    — {lang, code}: карточка с кодом во вкладке Code
+#   thumb      — превью для списка на главной (static/img/<файл>)
 #   images     — список {src: static/img/<файл>, caption}
 #   resume     — true: проект попадает в короткое резюме
 projects:
@@ -113,8 +85,6 @@ projects:
     title: Цифровой двойник отделения Почты России
     year: 2026
     kind: Хакатон
-    date: 2026-10-08
-    featured: true
     event: Хакатон Почтатеха, 17 сентября — 8 октября 2026, финал, 5 место
     summary: >-
       Веб-редактор плана почтового отделения в 2D и 3D: инвентаризация оборудования,
@@ -135,20 +105,12 @@ projects:
     images:
       - src: static/img/pochta.jpg
         caption: План демо-отделения с зонами, оборудованием и инвентаризацией
-    snippet:
-      lang: bash
-      code: |-
-        docker compose up --build -d
-        # редактор: http://127.0.0.1:8080
-        npm test && npm run typecheck && npm run test:e2e
     resume: true
 
   - slug: rlt-suppliers
     title: Подбор поставщиков для госзакупок
     year: 2026
     kind: Хакатон
-    date: 2026-10-02
-    featured: true
     event: RLT.Hack (Росэлторг), 1–2 октября 2026, финал, 5 место
     summary: >-
       Сервис подбирает поставщиков, производителей и дистрибьюторов под закупку
@@ -171,20 +133,12 @@ projects:
     images:
       - src: static/img/rlt.jpg
         caption: Карточка поставщика с ролью, историей закупок и соответствием товару
-    snippet:
-      lang: bash
-      code: |-
-        make data PART=processed && make data PART=cache
-        make demo          # UI, API и воркер: http://127.0.0.1:8000
-        make eval EXP=<id> # оценка с bootstrap-интервалами
     resume: true
 
   - slug: floodvalue
     title: FloodValue — карта затоплений по радарным снимкам
     year: 2026
     kind: Хакатон
-    date: 2026-09-27
-    featured: true
     event: Космохакатон 2026, 25–27 сентября, финал, 3 место
     summary: >-
       По радарным снимкам Sentinel-1 модель строит вероятностную карту воды,
@@ -207,20 +161,12 @@ projects:
     images:
       - src: static/img/kosmo.jpg
         caption: Интерфейс с наблюдениями на карте мира
-    snippet:
-      lang: bash
-      code: |-
-        make setup && make data && make split
-        make train GPU=1   # U-Net, ансамбль из 5 seed
-        make all CHIP=Sri-Lanka_713926 BUDGET=5000
     resume: true
 
   - slug: neftekod
     title: Рекомендации оператору установки гидроочистки
     year: 2026
     kind: Хакатон
-    date: 2026-09-22
-    featured: false
     event: Нефтекод 2.0, 8–22 сентября 2026
     summary: >-
       Мультиагентная система по данным установки прогнозирует качество дизельного
@@ -238,21 +184,12 @@ projects:
     result: >-
       Рекомендация выдаётся карточкой по семи блокам ТЗ и в JSON. Прогон
       детерминирован, проект покрыт 346 тестами.
-    snippet:
-      lang: bash
-      code: |-
-        python scripts/prepare_data.py       # ЛИМС/ПАК → таблицы
-        python scripts/evaluate_forecast.py  # бэктест прогноза серы
-        python scripts/run_all_scenarios.py  # 4 сценария → рекомендации
-        pytest -q                            # 346 passed
     resume: true
 
   - slug: tender-hack
     title: Агрегатор цен с маркетплейсов
     year: 2026
     kind: Хакатон
-    date: 2026-05-25
-    featured: false
     event: Tender Hack, 22–25 мая 2026
     summary: >-
       Сервис параллельно ищет цены на товар в Wildberries, Ozon, Яндекс Маркете
@@ -271,12 +208,6 @@ projects:
       Похожие товары сопоставляются эмбеддингами rubert-tiny2.
     result: >-
       Рабочий прототип с React-интерфейсом и запуском через Docker.
-    snippet:
-      lang: bash
-      code: |-
-        cp .env.example .env
-        cd docker && bash up.sh
-        # API: http://127.0.0.1:8000/docs, UI: http://127.0.0.1:5173
     resume: true
 
 # Хакатоны и достижения. Поля: date, title, result, description, url (необязательно).
@@ -285,27 +216,27 @@ achievements:
     title: Хакатон Почтатеха
     result: финал, 5 место
     description: Цифровой двойник отделения Почты России.
-    url: /code/post-digital-twin/
+    url: /projects/post-digital-twin/
   - date: Октябрь 2026
     title: RLT.Hack (Росэлторг)
     result: финал, 5 место
     description: Подбор поставщиков для госзакупок.
-    url: /code/rlt-suppliers/
+    url: /projects/rlt-suppliers/
   - date: Сентябрь 2026
     title: Космохакатон 2026
     result: финал, 3 место
     description: FloodValue — карта затоплений по радарным снимкам.
-    url: /code/floodvalue/
+    url: /projects/floodvalue/
   - date: Сентябрь 2026
     title: Нефтекод 2.0
     result: участие
     description: Рекомендации оператору установки гидроочистки.
-    url: /code/neftekod/
+    url: /projects/neftekod/
   - date: Май 2026
     title: Tender Hack
     result: участие
     description: Агрегатор цен с маркетплейсов.
-    url: /code/tender-hack/
+    url: /projects/tender-hack/
   - date: Октябрь 2025
     title: Внутренний хакатон по Data Science
     result: 3 место

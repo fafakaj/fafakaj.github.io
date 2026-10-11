@@ -10,33 +10,13 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="{{ site_url }}{{ path }}">
   {% if person.photo %}<meta property="og:image" content="{{ site_url }}{{ person.photo }}">{% endif %}
-  <meta name="theme-color" content="#CBC7AF">
   <link rel="icon" href="{{ root }}static/favicon-32.png" type="image/png" sizes="32x32">
   <link rel="icon" href="{{ root }}static/logo.png" type="image/png" sizes="512x512">
   <link rel="apple-touch-icon" href="{{ root }}static/apple-touch-icon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400&display=swap">
   <link rel="stylesheet" href="{{ root }}static/style.css">
 </head>
 <body>
-<div class="overlay" aria-hidden="true"></div>
-<div class="page">
-  <nav class="tabs" aria-label="Разделы">
-    <div class="left-border" aria-hidden="true"></div>
-    {% for t in tabs %}
-    <a class="button{% if t.id == tab %} active{% endif %}" href="{{ root }}{{ t.href }}"{% if t.id == tab %} aria-current="page"{% endif %}>
-      <div><i>{{ icon(t.icon) }}</i>{{ t.label }}</div>
-    </a>
-    {% endfor %}
-  </nav>
-  <div class="separator" aria-hidden="true"><div></div></div>
-  <header class="page-header">
-    <h1 class="title">{% block heading %}{% endblock %}</h1>
-  </header>
-  {% block main %}{% endblock %}
-  <footer class="page-footer">{{ person.full_name }}. Обновлено {{ updated }}.</footer>
-</div>
+{% block body %}{% endblock %}
 <script src="{{ root }}static/site.js" defer></script>
 </body>
 </html>

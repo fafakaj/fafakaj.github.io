@@ -1,13 +1,12 @@
 {% extends "base.html" %}
-{% block title %}404 — {{ person.name }}{% endblock %}
-{% block heading %}404{% endblock %}
-{% block main %}
-<main class="content wide">
-  <section class="cards">
-    <article class="card full warn">
-      <div class="card-header"><div>{{ icon("info") }}<span>Страница не найдена</span></div></div>
-      <div class="card-body"><p>По этому адресу ничего нет. Откройте вкладку <a href="{{ root }}">Feed</a>.</p></div>
-    </article>
-  </section>
+{% block title %}Страница не найдена — {{ person.name }}{% endblock %}
+{% block body %}
+<header class="container minihead">
+  <a href="{{ root }}" class="mininame">{{ person.name }}</a>
+</header>
+<hr>
+<main class="container">
+  <h3 class="ctitle">страница не найдена</h3>
+  <p>По этому адресу ничего нет. Откройте <a href="{{ root }}">главную страницу</a>.</p>
 </main>
 {% endblock %}
