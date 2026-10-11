@@ -1,7 +1,7 @@
 # fafakaj.github.io
 
 Портфолио Александра Лесницкого: сайт https://fafakaj.github.io и два PDF (резюме и полное портфолио).
-Стиль сайта — по образцу karpathy.ai.
+Стиль сайта — по образцу karpathy.ai. Вкладки: главная, проекты, контакты, резюме.
 
 ## Как обновить
 
@@ -13,7 +13,7 @@
 
 ```bash
 pip install -r requirements.txt   # Jinja2, PyYAML
-python build.py                   # сайт и PDF в dist/ (нужен typst в PATH)
+python build.py                   # сайт, PDF и их превью в dist/ (нужен typst в PATH)
 python build.py --no-pdf          # только сайт
 python -m http.server -d dist     # просмотр: http://localhost:8000
 ```
@@ -22,9 +22,9 @@ python -m http.server -d dist     # просмотр: http://localhost:8000
 
 | Путь | Что это |
 |---|---|
-| `data/portfolio.yaml` | данные: фраза под именем, фото, временная шкала, образование, навыки, проекты, достижения, контакты |
-| `templates/` | HTML-шаблоны Jinja2: главная, страница проекта, 404 |
-| `static/` | CSS, JS (почта по клику), иконки, картинки |
+| `data/portfolio.yaml` | данные: имя, подпись и фото для главной, образование, стек технологий, проекты, достижения, контакты |
+| `templates/` | HTML-шаблоны Jinja2: `base.html` (вкладки), `index.html`, `projects.html`, `project.html`, `social.html`, `resume.html`, `404.html` |
+| `static/` | CSS, JS (почта для спам-ботов скрыта ROT13), иконки, картинки |
 | `pdf/resume.typ` | резюме на одну страницу: слева проекты (`resume: true`), справа образование и навыки |
 | `pdf/portfolio.typ` | полное портфолио: каждый проект — кейс со скриншотами |
 | `pdf/fonts/` | шрифты Golos Text и JetBrains Mono (SIL OFL 1.1) для PDF |

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Резюме — {{ person.name }}{% endblock %}
+{% block body %}
+<main class="container">
+  <h3 class="ctitle">резюме</h3>
+  <div class="docs">
+    {% for d in docs %}
+    <figure class="doc">
+      <a href="{{ root }}pdf/{{ d.file }}" download tabindex="-1" aria-hidden="true">
+        {% if d.preview %}<img src="{{ root }}pdf/{{ d.preview }}" alt="" loading="lazy">{% else %}<span class="doc-blank">PDF</span>{% endif %}
+      </a>
+      <figcaption>
+        <a href="{{ root }}pdf/{{ d.file }}" download>Скачать {{ d.label }}</a>
+        <span class="doc-note">{{ d.note }}</span>
+      </figcaption>
+    </figure>
+    {% endfor %}
+  </div>
+</main>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Контакты — {{ person.name }}{% endblock %}
+{% block body %}
+<main class="container">
+  <h3 class="ctitle">контакты</h3>
+  <ul class="contacts">
+    {% for c in contacts %}
+    {% set mail = c.url.startswith("mailto:") %}
+    <li>
+      <img src="{{ root }}static/icons/{{ 'email' if mail else c.label | lower }}.svg" class="iico" alt="">
+      <span class="clabel">{{ c.label }}</span>
+      {% if mail %}
+      {# Адрес лежит в ROT13 и собирается скриптом: так его не видят спам-боты. #}
+      <a class="cvalue" data-email="{{ c.value | rot13 }}" href="#">почта скрыта от спам-ботов, включите JavaScript</a>
+      {% else %}
+      <a class="cvalue" href="{{ c.url }}">{{ c.value }}</a>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+</main>
+{% endblock %}

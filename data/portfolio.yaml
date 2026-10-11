@@ -7,8 +7,8 @@ person:
   name: Александр Лесницкий
   full_name: Лесницкий Александр Маркович
   role: Студент 2 курса, инженерия ИИ
-  # Фраза под именем на сайте и в PDF (как у karpathy.ai).
-  tagline: Now I'm a little motivated.
+  # Подпись под именем на главной странице сайта.
+  title: ML/DS инженер
   # Круглое фото в шапке: положите файл в static/img/ и укажите путь. Пусто — без фото.
   photo: static/img/avatar.jpg
   about: >-
@@ -27,26 +27,6 @@ contacts:
     value: fafakaj
     url: https://github.com/fafakaj
     pdf: false  # только на сайте, в PDF не показывать
-
-# Временная шкала на сайте, сверху — самое новое.
-# text поддерживает ссылки: [текст](https://...). logo — картинка в static/img/ (квадрат);
-# без logo рисуется плашка с текстом logo_text.
-timeline:
-  - period: 2026
-    logo_text: Хакатоны
-    text: >-
-      Пять командных хакатонов за год, три из них — финал:
-      [Космохакатон](/projects/floodvalue/) (3 место),
-      [RLT.Hack от Росэлторга](/projects/rlt-suppliers/) (5 место)
-      и [хакатон Почтатеха](/projects/post-digital-twin/) (5 место).
-      Проекты и результаты — ниже.
-  - period: 2025 —
-    logo: static/img/itmo-logo.png
-    logo_text: ИТМО
-    text: >-
-      Учусь на 2 курсе [Университета ИТМО](https://itmo.ru), факультет ПИиКТ,
-      направление «Программная инженерия». Программа «Нейротехнологии
-      и программирование», трек «Инженерия искусственного интеллекта».
 
 education:
   - period: 2025 — н. в.
@@ -73,11 +53,11 @@ skills:
 # Проект. Поля:
 #   slug       — адрес страницы: /projects/<slug>/
 #   title, year, kind (например «Хакатон»), event — название хакатона, даты, результат
-#   summary    — одна-две фразы для главной и резюме
+#   summary    — одна-две фразы для списка проектов и резюме
 #   stack      — список технологий
 #   links      — список {label, url}
 #   task, solution, result — кейс для страницы проекта и полного PDF
-#   thumb      — превью для списка на главной (static/img/<файл>)
+#   thumb      — превью для списка проектов (static/img/<файл>)
 #   images     — список {src: static/img/<файл>, caption}
 #   resume     — true: проект попадает в короткое резюме
 projects:

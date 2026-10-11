@@ -1,4 +1,4 @@
-/* Стиль по образцу karpathy.ai: белый фон, колонка 970px, временная шкала. */
+/* Стиль по образцу karpathy.ai: белый фон, колонка 970px, серый текст, синие ссылки. */
 :root {
   --text: #333;
   --muted: #999;
@@ -38,10 +38,33 @@ a:focus-visible, button:focus-visible {
   grid-template-columns: repeat(12, 1fr);
 }
 
-/* Шапка */
-#dhead { margin-top: 20px; }
+/* Вкладки: на каждой странице, как ряд ссылок внизу karpathy.ai. */
+.topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 20px;
+  padding-top: 20px;
+}
+.mininame { font-size: 22px; color: var(--text); text-decoration: none; }
+.mininame:hover { text-decoration: underline; }
+.tabs { display: flex; flex-wrap: wrap; margin-left: auto; }
+.tabs a { padding: 2px 14px; font-size: 17px; }
+.tabs a + a { border-left: 1px solid #ccc; }
+.tabs a:last-child { padding-right: 0; }
+.tabs a.active { color: var(--text); text-decoration: none; }
+@media (max-width: 600px) {
+  .topbar { justify-content: center; }
+  .tabs { margin-left: 0; justify-content: center; }
+  .tabs a { padding: 2px 10px; font-size: 16px; }
+  .tabs a:last-child { padding-right: 10px; }
+}
+
+/* Главная */
+#dhead { margin-top: 60px; margin-bottom: 40px; }
 #dpic { grid-column: span 6; text-align: right; }
-#ddesc { padding-top: 40px; padding-left: 20px; grid-column: span 6; }
+#ddesc { padding-top: 80px; padding-left: 20px; grid-column: span 6; }
 .nophoto #ddesc { grid-column: span 12; padding: 30px 0 10px; text-align: center; }
 .nophoto h2 { margin-left: auto; margin-right: auto; }
 
@@ -60,11 +83,7 @@ h2 {
 }
 #dpic img { width: 240px; height: 240px; border-radius: 120px; object-fit: cover; }
 
-#dico a, .iico-btn { display: inline-block; text-decoration: none; }
 .iico { width: 40px; height: 40px; vertical-align: middle; }
-.iico-btn { padding: 0; border: 0; background: none; cursor: pointer; border-radius: 50%; }
-#demail { margin-top: 10px; color: #555; opacity: 0; transition: opacity .7s; min-height: 1.4em; }
-#demail.shown { opacity: 1; }
 
 @media (max-width: 991px) {
   #dpic { grid-column: span 12; text-align: center; }
@@ -77,63 +96,6 @@ hr {
   padding: 0;
   margin: 20px 0;
   border: 0;
-}
-
-/* Временная шкала */
-.timespan {
-  grid-column: span 1;
-  font-size: 14px;
-  text-align: right;
-  padding-right: 5px;
-  color: var(--faint);
-}
-.ico {
-  grid-column: span 1;
-  border-left: 2px solid var(--line);
-  position: relative;
-}
-.ico img, .logo-text {
-  border-radius: 5px;
-  width: 100%;
-  max-width: 80px;
-  margin-left: 10px;
-}
-.ico img { aspect-ratio: 1; object-fit: cover; }
-.logo-text {
-  aspect-ratio: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #f3f3f3;
-  color: #555;
-  font-size: 13px;
-  font-weight: bold;
-}
-.entry-dot {
-  position: absolute;
-  top: 0;
-  left: -8px;
-  width: 10px;
-  height: 10px;
-  border-radius: 7px;
-  background-color: var(--line);
-  border: 2px solid #fff;
-}
-.desc {
-  grid-column: span 10;
-  font-size: 17px;
-  padding-left: 20px;
-  padding-bottom: 20px;
-}
-.desc p { margin: 0 0 1em; }
-.desc p:last-child { margin-bottom: 0; }
-
-@media (max-width: 991px) {
-  .timespan { grid-column: span 2; }
-  .ico { grid-column: span 2; }
-  .desc { grid-column: span 8; font-size: 16px; padding-left: 12px; }
-  .ico img, .logo-text { margin-left: 6px; }
-  .logo-text { font-size: 10px; overflow-wrap: anywhere; padding: 2px; box-sizing: border-box; }
 }
 
 /* Разделы */
@@ -188,10 +150,44 @@ hr {
 
 #footer { margin-top: 60px; margin-bottom: 40px; color: var(--faint); font-size: 14px; text-align: center; }
 
+/* Контакты */
+.contacts { list-style: none; padding: 0; margin: 0; }
+.contacts li {
+  display: grid;
+  grid-template-columns: 40px 110px 1fr;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 18px;
+}
+.clabel { color: var(--muted); }
+.cvalue { overflow-wrap: anywhere; }
+@media (max-width: 600px) {
+  .contacts li { grid-template-columns: 40px 1fr; row-gap: 0; }
+  .clabel { font-size: 14px; }
+  .cvalue { grid-column: 2; }
+  .contacts .iico { grid-row: span 2; }
+}
+
+/* Резюме: первые страницы PDF как листы бумаги */
+.docs { display: flex; flex-wrap: wrap; gap: 40px; }
+.doc { margin: 0; width: 280px; max-width: 100%; }
+.doc > a { display: block; }
+.doc img, .doc-blank {
+  display: block;
+  width: 100%;
+  aspect-ratio: 210 / 297;
+  object-fit: cover;
+  object-position: top;
+  border: 1px solid var(--line);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .12);
+}
+.doc-blank { display: flex; align-items: center; justify-content: center; color: var(--faint); font-size: 28px; box-sizing: border-box; }
+.doc figcaption { margin-top: 12px; font-size: 17px; color: var(--text); }
+.doc-note { display: block; color: var(--muted); font-size: 14px; margin-top: 2px; }
+
 /* Страница проекта */
-.minihead { padding-top: 20px; }
-.mininame { font-size: 22px; color: var(--text); text-decoration: none; }
-.mininame:hover { text-decoration: underline; }
 .case { max-width: 760px; margin-bottom: 60px; }
 .case h1 { margin-top: 10px; }
 .case .ctitle { font-size: 28px; margin: 32px 0 12px; }

@@ -2,10 +2,6 @@
 {% block title %}{{ p.title }} — {{ person.name }}{% endblock %}
 {% block description %}{{ p.summary }}{% endblock %}
 {% block body %}
-<header class="container minihead">
-  <a href="{{ root }}" class="mininame">{{ person.name }}</a>
-</header>
-<hr>
 <main class="container">
   <article class="case">
     <h1>{{ p.title }}</h1>
@@ -31,7 +27,7 @@
     {% endfor %}
     {% endif %}
 
-    <p class="back"><a href="{{ root }}#projects">← все проекты</a></p>
+    <p class="back"><a href="{{ root }}projects/">← все проекты</a></p>
   </article>
 </main>
 {% endblock %}

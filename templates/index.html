@@ -1,82 +1,14 @@
 {% extends "base.html" %}
-{% from "icons.html" import icons %}
 {% block body %}
-<header id="dhead" class="container">
+<main id="dhead" class="container">
   <div class="row{% if not person.photo %} nophoto{% endif %}">
     {% if person.photo %}
     <div id="dpic"><img src="{{ root }}{{ person.photo }}" class="ppic" alt="{{ person.name }}"></div>
     {% endif %}
     <div id="ddesc">
       <h1>{{ person.name }}</h1>
-      <h2>{{ person.tagline }}</h2>
-      {{ icons(contacts, root, pdf) }}
+      <h2>{{ person.title }}</h2>
     </div>
   </div>
-</header>
-
-<hr>
-
-<main>
-  <section id="history" class="container" aria-label="Путь">
-    {% for t in timeline %}
-    <div class="entry row">
-      <div class="timespan">{{ t.period }}</div>
-      <div class="ico">
-        <div class="entry-dot"></div>
-        {% if t.logo %}<img src="{{ root }}{{ t.logo }}" alt="">{% else %}<div class="logo-text">{{ t.logo_text }}</div>{% endif %}
-      </div>
-      <div class="desc">{{ t.text | md }}</div>
-    </div>
-    {% endfor %}
-  </section>
-
-  {% if projects %}
-  <section id="projects" class="container">
-    <h3 class="ctitle">проекты</h3>
-    {% for p in projects %}
-    <div class="project">
-      <div class="pico"><a href="{{ root }}projects/{{ p.slug }}/" tabindex="-1" aria-hidden="true">{% if p.thumb %}<img src="{{ root }}{{ p.thumb }}" alt="">{% else %}<span class="pico-text">{{ (p.event or p.title).split(",")[0] }}</span>{% endif %}</a></div>
-      <div class="pdesc">
-        <a href="{{ root }}projects/{{ p.slug }}/">{{ p.title }}</a> — {{ p.summary }}
-        {% if p.event %}<span class="pevent">{{ p.event }}</span>{% endif %}
-        {% if p.stack %}<span class="pstack">{{ p.stack | join(", ") }}</span>{% endif %}
-      </div>
-      <div class="pend"></div>
-    </div>
-    {% endfor %}
-  </section>
-  {% endif %}
-
-  {% if achievements %}
-  <section id="achievements" class="container">
-    <h3 class="ctitle">хакатоны и достижения</h3>
-    {% for a in achievements %}
-    <div class="pub">
-      <div class="pub-title">{% if a.url %}<a href="{{ a.url }}">{{ a.title }}</a>{% else %}{{ a.title }}{% endif %}</div>
-      {% if a.result %}<div class="pub-venue">{{ a.result }}</div>{% endif %}
-      <div class="pub-authors">{{ a.date }}{% if a.description %}. {{ a.description }}{% endif %}</div>
-    </div>
-    {% endfor %}
-  </section>
-  {% endif %}
-
-  <section id="skills" class="container">
-    <h3 class="ctitle">навыки</h3>
-    {% for s in skills %}
-    <p class="skill"><span class="skill-group">{{ s.group }}:</span> {{ s["items"] | join(", ") }}</p>
-    {% endfor %}
-  </section>
-
-  <section id="pdf" class="container">
-    <h3 class="ctitle">резюме в pdf</h3>
-    <ul class="tul">
-      <li class="til tilb"><a href="{{ root }}pdf/{{ pdf.resume }}" download>Резюме, 1 страница</a></li>
-      <li class="til"><a href="{{ root }}pdf/{{ pdf.portfolio }}" download>Полное портфолио</a></li>
-    </ul>
-  </section>
 </main>
-
-<footer class="container" id="footer">
-  {{ person.full_name }}. Обновлено {{ updated }}.
-</footer>
 {% endblock %}

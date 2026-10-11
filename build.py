@@ -19,12 +19,25 @@ from markupsafe import Markup, escape
 ROOT = Path(__file__).resolve().parent
 PDF = {"resume": "Lesnitsky_Resume.pdf", "portfolio": "Lesnitsky_Portfolio.pdf"}
 
+# Вкладки сверху на каждой странице.
+TABS = [
+    {"id": "home", "label": "главная", "href": ""},
+    {"id": "projects", "label": "проекты", "href": "projects/"},
+    {"id": "social", "label": "контакты", "href": "social/"},
+    {"id": "resume", "label": "резюме", "href": "resume/"},
+]
+
+# Файлы на вкладке «резюме»: превью — первая страница PDF в PNG.
+DOCS = [
+    {"id": "resume", "label": "резюме", "note": "PDF, 1 страница"},
+    {"id": "portfolio", "label": "полное портфолио", "note": "PDF, все проекты со скриншотами"},
+]
+
 
 def load(path: Path) -> dict:
     data = yaml.safe_load(path.read_text(encoding="utf-8"))
     data.setdefault("projects", [])
     data.setdefault("achievements", [])
-    data.setdefault("timeline", [])
     slugs = [p["slug"] for p in data["projects"]]
     if len(slugs) != len(set(slugs)):
         raise SystemExit("Повтор slug в projects: у каждого проекта свой slug")
@@ -52,8 +65,15 @@ def build_site(data: dict, out: Path) -> None:
     )
     env.filters["md"] = md
     env.filters["rot13"] = lambda s: codecs.encode(str(s), "rot13")
+    docs = []
+    for d in DOCS:
+        preview = f"{d['id']}-preview.png"
+        docs.append({**d, "file": PDF[d["id"]],
+                     "preview": preview if (out / "pdf" / preview).exists() else None})
     common = {
         **data,
+        "tabs": TABS,
+        "docs": docs,
         "pdf": PDF,
         "root": "/",
         "updated": dt.date.today().strftime("%d.%m.%Y"),
@@ -66,10 +86,13 @@ def build_site(data: dict, out: Path) -> None:
         html = env.get_template(template).render(**common, path=page, **extra)
         path.write_text(html, encoding="utf-8")
 
-    render("index.html", "index.html")
-    render("404.html", "404.html")
+    render("index.html", "index.html", tab="home")
+    render("projects.html", "projects/index.html", tab="projects")
     for p in data["projects"]:
-        render("project.html", f"projects/{p['slug']}/index.html", p=p)
+        render("project.html", f"projects/{p['slug']}/index.html", tab="projects", p=p)
+    render("social.html", "social/index.html", tab="social")
+    render("resume.html", "resume/index.html", tab="resume")
+    render("404.html", "404.html", tab=None)
 
     shutil.copytree(ROOT / "static", out / "static", dirs_exist_ok=True)
     (out / ".nojekyll").write_text("")
@@ -79,18 +102,18 @@ def build_pdf(data_path: Path, out: Path) -> None:
     (out / "pdf").mkdir(parents=True, exist_ok=True)
     data_rel = "/" + data_path.resolve().relative_to(ROOT).as_posix()
     for name, filename in PDF.items():
-        subprocess.run(
-            [
-                "typst", "compile",
-                "--root", str(ROOT),
-                "--font-path", str(ROOT / "pdf" / "fonts"),
-                "--ignore-system-fonts",
-                "--input", f"data={data_rel}",
-                str(ROOT / "pdf" / f"{name}.typ"),
-                str(out / "pdf" / filename),
-            ],
-            check=True,
-        )
+        base = [
+            "typst", "compile",
+            "--root", str(ROOT),
+            "--font-path", str(ROOT / "pdf" / "fonts"),
+            "--ignore-system-fonts",
+            "--input", f"data={data_rel}",
+            str(ROOT / "pdf" / f"{name}.typ"),
+        ]
+        subprocess.run([*base, str(out / "pdf" / filename)], check=True)
+        # Превью для вкладки «резюме»: первая страница в PNG.
+        subprocess.run([*base, "--pages", "1", "--ppi", "110",
+                        str(out / "pdf" / f"{name}-preview.png")], check=True)
 
 
 def main() -> None:
@@ -103,9 +126,10 @@ def main() -> None:
     data = load(args.data)
     if args.out.exists():
         shutil.rmtree(args.out)
-    build_site(data, args.out)
+    # PDF собираются первыми: сайт показывает их превью, если они есть.
     if not args.no_pdf:
         build_pdf(args.data, args.out)
+    build_site(data, args.out)
     print(f"Готово: {args.out}")
 
 
